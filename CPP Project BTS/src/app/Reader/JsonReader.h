@@ -40,6 +40,13 @@ namespace READER {
 		void addValue(std::string key, std::string value);
 
 		/// <summary>
+		/// Retourne la valeur associee a la cle
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		std::string getValue(std::string key);
+
+		/// <summary>
 		/// Charge le fichier json dans le document
 		/// </summary>
 		void load();

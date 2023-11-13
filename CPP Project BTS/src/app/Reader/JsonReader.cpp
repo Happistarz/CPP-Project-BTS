@@ -27,6 +27,11 @@ namespace READER {
 		save();
 	}
 
+	std::string JsonReader::getValue(std::string key) {
+		// recupere la valeur du document
+		return document[key.c_str()].GetString();
+	}
+
 	void JsonReader::load() {
 
 		// charge le fichier

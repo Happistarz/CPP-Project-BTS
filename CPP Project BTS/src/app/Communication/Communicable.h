@@ -5,32 +5,54 @@
 
 #include <SFML/Network.hpp>
 #include <string>
+#include <iostream>
+#include "Client/Client.h"
+#include "Serveur/Serveur.h"
+
 
 namespace METIER {
-	// abstract class of communicable object
-	class Communicable {
+	/// <summary>
+	/// Classe Communicable qui gere les objets communicables
+	/// </summary>
+	/*class Communicable {
 	protected:
-		// ip of the communicable object
-		std::string ip;
-		// port of the communicable object
-		int port;
-		// socket of the communicable object
-		sf::TcpSocket socket;
+		sf::IpAddress ip;
+		unsigned short port;
+		sf::TcpSocket client;
+		sf::TcpListener server;
+		sf::TcpSocket* connected;
 	public:
-		// constructor
-		Communicable(std::string ip, int port);
-		// destructor
+		Communicable(const sf::IpAddress& ip, unsigned short port);
 		~Communicable();
-		// send a message to a communicable object
-		void sendMessage(std::string message, std::string communicableIp, int communicablePort);
-		// receive a message from a communicable object
-		std::string receiveMessage();
-		// get the ip of the communicable object
-		std::string getIp() const { return ip; }
-		// get the port of the communicable object
-		int getPort() const { return port; }
-		// get the socket of the communicable object
-		sf::TcpSocket& getSocket() { return socket; }
+
+		bool startListening();
+		bool connect();
+		bool accept();
+		void disconnect();
+		virtual bool sendMessage(std::string message);
+		virtual std::string receiveMessage();
+		sf::IpAddress getIp() const { return ip; }
+		unsigned short getPort() const { return port; }
+		sf::TcpSocket& getClient() { return client; }
+	};*/
+
+	class Communicable {
+	private:
+		CORE::Client* client;
+		CORE::Serveur* serveur;
+	public:
+		Communicable(const sf::IpAddress& ip, unsigned short listeningPort, unsigned short remotePort);
+		~Communicable();
+
+		bool startListening();
+		bool connect();
+		bool accept(sf::TcpSocket& connected);
+		void disconnect();
+		bool sendMessage(std::string message);
+		std::string receiveMessage(sf::TcpSocket& connected);
+		sf::IpAddress getIp() const { return client->getIp(); }
+		unsigned short getPort() const { return client->getPort(); }
+		sf::TcpSocket& getClient() { return client->getClient(); }
 	};
 }
 

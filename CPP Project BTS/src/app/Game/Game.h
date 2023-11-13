@@ -4,7 +4,12 @@
 #define GAME_H
 
 #include <SFML/Graphics.hpp>
+#include "Graphics/Simulator.h"
 #include "../Reader/JsonReader.h"
+#include "../Communication/Station.h"
+#include "../Communication/Satellite.h"
+#include "Graphics/StationRender.h"
+#include "Graphics/SatelliteRender.h"
 
 namespace APP {
 	/// <summary>

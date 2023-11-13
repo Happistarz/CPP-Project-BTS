@@ -1,18 +1,72 @@
+#define DEV 0
+
+#if DEV
+#include "app/Communication/Communicable.h"
+#include <SFML/Network.hpp>
+#include <iostream>
+#include <iomanip>
+#else !DEV
 #include "app/Game/Game.h"
 #include "app/Reader/JsonReader.h"
+#endif // DEV
+
 
 int main() {
 
-	// get the root path of the project without knowing the current working directory
+#if !DEV
+	// recupere le chemin du projet pour les fichiers
 	std::string rootPath = __FILE__;
 	rootPath = rootPath.substr(0, rootPath.find("main.cpp"));
 
+
+
+	// initialise le json reader
 	READER::JsonReader* jsonReader = new READER::JsonReader(rootPath + "data/json/test.json");
 
+	// lance le jeu
 	APP::Game* game = new APP::Game(rootPath, jsonReader);
 	game->run();
 
+	// delete les objets
 	delete game;
+	delete jsonReader;
+
+#else 
+	// test
+
+	METIER::Communicable* station = new METIER::Communicable(sf::IpAddress::getLocalAddress(), 6000, 5000);
+	METIER::Communicable* satellite = new METIER::Communicable(sf::IpAddress::getLocalAddress(), 5000, 6000);
+	satellite->connect();
+	sf::TcpSocket connected;
+	station->accept(connected);
+	station->connect();
+	sf::TcpSocket connected2;
+	satellite->accept(connected2);
+
+	std::string message = "yo";
+	satellite->sendMessage(message);
+	std::cout << station->receiveMessage(connected) << std::endl;
+
+	station->sendMessage(message + "2");
+	std::cout << satellite->receiveMessage(connected2) << std::endl;
+
+	station->disconnect();
+	satellite->disconnect();
+
+	std::cout << "Appuyez sur une touche pour quitter..." << std::endl;
+	std::cin.get();
+
+	// connexion entre serveur et client
+	// le serveur s'instancie sur ip et port
+	// le serveur ecoute sur le port
+	// le client s'intancie sur ip et port
+	// quand un client se co au serveur, le serveur accepte la connexion
+	// le serveur duplique son socket pour garder l'original pour ecouter
+	// le nouveau socket est utilise pour communiquer avec le client
+	// le client et le serveur peuvent envoyer et recevoir des messages sur leur socket
+	// le client et le nouveau serveur peuvent se deconnecter
+
+#endif // DEV
 
 	return 0;
 }

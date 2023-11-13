@@ -141,21 +141,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\app\Game\Graphics\SatelliteRender.cpp" />
+    <ClCompile Include="src\app\Game\Graphics\Simulator.cpp" />
+    <ClCompile Include="src\app\Communication\Serveur\Serveur.cpp" />
+    <ClCompile Include="src\app\Communication\Client\Client.cpp" />
+    <ClCompile Include="src\app\Helper\Functions.cpp" />
     <ClCompile Include="src\app\Communication\Communicable.cpp" />
     <ClCompile Include="src\app\Communication\Satellite.cpp" />
     <ClCompile Include="src\app\Game\Game.cpp" />
     <ClCompile Include="src\app\Reader\JsonReader.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\app\Communication\Station.cpp" />
+    <ClCompile Include="src\app\Game\Graphics\StationRender.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\app\Game\Graphics\SatelliteRender.h" />
+    <ClInclude Include="src\app\Game\Graphics\Simulator.h" />
+    <ClInclude Include="src\app\Communication\Serveur\Serveur.h" />
+    <ClInclude Include="src\app\Communication\Client\Client.h" />
+    <ClInclude Include="src\app\Helper\Functions.h" />
     <ClInclude Include="src\app\Communication\Communicable.h" />
     <ClInclude Include="src\app\Communication\Satellite.h" />
     <ClInclude Include="src\app\Game\Game.h" />
     <ClInclude Include="src\app\Reader\JsonReader.h" />
     <ClInclude Include="src\app\Communication\Station.h" />
+    <ClInclude Include="src\app\Game\Graphics\StationRender.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\data\json\setup.json" />
     <None Include="src\data\json\test.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

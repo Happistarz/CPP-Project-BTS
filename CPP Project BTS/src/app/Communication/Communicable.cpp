@@ -2,37 +2,39 @@
 
 namespace METIER {
 
-	Communicable::Communicable(std::string ip, int port) : ip(ip), port(port) {
-		// bind la socket a l'ip et au port
-		socket.connect(ip, port);
+	Communicable::Communicable(const sf::IpAddress& ip, unsigned short listeningPort, unsigned short remotePort) {
+		serveur = new CORE::Serveur(listeningPort);
+		client = new CORE::Client(ip, remotePort);
+
+		serveur->startListening();
 	}
 
 	Communicable::~Communicable() {
-		// ferme la socket
-		socket.disconnect();
+		disconnect();
 	}
 
-	void Communicable::sendMessage(std::string message, std::string communicableIp, int communicablePort) {
-		// bind la socket a l'ip et au port
-		socket.connect(communicableIp, communicablePort);
-
-		// envoi le message
-		socket.send(message.c_str(), message.size() + 1);
-
-		// ferme la socket
-		socket.disconnect();
+	bool Communicable::startListening() {
+		return serveur->startListening();
 	}
 
-	std::string Communicable::receiveMessage() {
-		// recoit le message
-		char message[2000];
-		std::size_t received;
-		socket.receive(message, sizeof(message), received);
+	bool Communicable::connect() {
+		return client->connect();
+	}
 
-		// converti le message en string
-		std::string recievedMessage(message, received);
+	bool Communicable::accept(sf::TcpSocket& connected) {
+		return serveur->accept(connected);
+	}
 
-		// retourne le message
-		return recievedMessage;
+	void Communicable::disconnect() {
+		client->disconnect();
+		serveur->disconnect();
+	}
+
+	bool Communicable::sendMessage(std::string message) {
+		return client->send(message);
+	}
+
+	std::string Communicable::receiveMessage(sf::TcpSocket& connected) {
+		return serveur->recieve(connected);
 	}
 }

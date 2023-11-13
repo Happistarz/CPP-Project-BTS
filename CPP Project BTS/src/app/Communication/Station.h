@@ -20,9 +20,9 @@ namespace METIER {
 		Station(std::string ip, int port);
 		~Station();
 
-		void pingSatellite(Communicable* satellite);
-		void sendSignal(Communicable* satellite, std::string message);
-		std::string receiveSignal(Communicable* satellite);
+		void pingSatellite(Communicable& satellite);
+		void sendSignal(Communicable& satellite, std::string message);
+		std::string receiveSignal();
 
 	};
 }

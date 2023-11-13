@@ -19,14 +19,26 @@ namespace APP {
 	}
 
 	void Game::run() {
-		sf::CircleShape shape(100.f);
-		shape.setFillColor(sf::Color::Green);
 
+		sf::Clock clock;
+		float deltaTime = 0.0f;
+
+		GRAPHICS::Simulator* simulator = new GRAPHICS::Simulator(window, rootPath);
+		GRAPHICS::StationRender* stationRender = new GRAPHICS::StationRender(window);
+		GRAPHICS::SatelliteRender* satelliteRender = new GRAPHICS::SatelliteRender(window);
 
 		while (window.isOpen()) {
+			sf::Time deltaTimeTimer = clock.restart();
+			deltaTime = deltaTimeTimer.asMicroseconds() / 1000.0;
+
 			processEvents();
 			handleInput();
+
+			// affichage de la fenetre
 			window.clear();
+			simulator->draw(window);
+			stationRender->draw(window);
+			satelliteRender->draw(window);
 			window.display();
 		}
 	}

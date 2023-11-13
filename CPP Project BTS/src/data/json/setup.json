@@ -1,0 +1,10 @@
+{
+  "satellitePort": 5000,
+  "satelliteHost": "localhost",
+  "stationPort": 6000,
+  "stationHost": "localhost",
+  "startZoom": 1,
+  "satelliteSpeed": 11000,
+  "satelliteAltitude": 35800,
+  "DataSpeed": 300000
+}

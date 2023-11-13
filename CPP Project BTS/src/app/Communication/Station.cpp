@@ -2,23 +2,24 @@
 
 namespace METIER {
 
-	Station::Station(std::string ip, int port) : Communicable::Communicable(ip, port) {}
+	Station::Station(std::string ip, int port) : Communicable::Communicable(ip, port, 5000) {}
 
 	Station::~Station() {}
 
-	void Station::pingSatellite(Communicable* satellite) {
+	void Station::pingSatellite(Communicable& satellite) {
 		// envoi le message
-		sendMessage("ping", satellite->getIp(), satellite->getPort());
+		sendMessage("ping");
 	}
 
-	void Station::sendSignal(Communicable* satellite, std::string message) {
+	void Station::sendSignal(Communicable& satellite, std::string message) {
 		// envoi le message
-		sendMessage(message, satellite->getIp(), satellite->getPort());
+		sendMessage(message);
 	}
 
-	std::string Station::receiveSignal(Communicable* satellite) {
+	std::string Station::receiveSignal() {
 		// recoit le message
-		return receiveMessage();
+		//return receiveMessage();
+		return "";
 	}
 
 }
