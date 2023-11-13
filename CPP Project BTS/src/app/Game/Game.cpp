@@ -23,9 +23,11 @@ namespace APP {
 		sf::Clock clock;
 		float deltaTime = 0.0f;
 
-		GRAPHICS::Simulator* simulator = new GRAPHICS::Simulator(window, rootPath);
+		GRAPHICS::Simulator* simulator = new GRAPHICS::Simulator(window, rootPath,*jsonReader);
 		GRAPHICS::StationRender* stationRender = new GRAPHICS::StationRender(window);
 		GRAPHICS::SatelliteRender* satelliteRender = new GRAPHICS::SatelliteRender(window);
+
+		UI::Button* close = new UI::Button(sf::Vector2f(),sf::Vector2f(),"X", 24U, window);
 
 		while (window.isOpen()) {
 			sf::Time deltaTimeTimer = clock.restart();

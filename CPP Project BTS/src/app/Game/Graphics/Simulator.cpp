@@ -1,7 +1,7 @@
 #include "Simulator.h"
 
 namespace GRAPHICS {
-	Simulator::Simulator(sf::RenderWindow& window, std::string& root) {
+	Simulator::Simulator(sf::RenderWindow& window, std::string& root, READER::JsonReader& jsonReader) {
 		sf::Vector2f backgroundSize(window.getSize().x / 1.5, window.getSize().y);
 		float borderSize = 2.f;
 
@@ -21,6 +21,7 @@ namespace GRAPHICS {
 
 		earthTexture.loadFromFile(root + "data/assets/earth.png");
 		earth.setTexture(earthTexture);
+		earth.setScale(0.8f,0.8f);
 		earth.setPosition(
 			HELPER::getShapePosition(
 				sky.getPosition(),

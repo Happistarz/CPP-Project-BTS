@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\app\Interface\Button.cpp" />
     <ClCompile Include="src\app\Game\Graphics\SatelliteRender.cpp" />
     <ClCompile Include="src\app\Game\Graphics\Simulator.cpp" />
     <ClCompile Include="src\app\Communication\Serveur\Serveur.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="src\app\Game\Graphics\StationRender.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\app\Interface\Button.h" />
     <ClInclude Include="src\app\Game\Graphics\SatelliteRender.h" />
     <ClInclude Include="src\app\Game\Graphics\Simulator.h" />
     <ClInclude Include="src\app\Communication\Serveur\Serveur.h" />
