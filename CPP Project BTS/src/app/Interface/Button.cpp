@@ -1,43 +1,60 @@
 #include "Button.h"
 
-namespace UI {
-	Button::Button(sf::Vector2f pos, sf::Vector2f size, std::string msg, unsigned short char_size, sf::RenderWindow& window) : window(window), isHovered(false)
-	{
-		shape.setPosition(pos);
-		shape.setSize(size);
-		shape.setFillColor(sf::Color(77, 166, 255));
 
-		text.setString(msg);
-		text.setCharacterSize(char_size);
-		text.setPosition(
-			HELPER::getShapePosition(
-				pos,
-				size,
-				text.getScale()
-			)
-		);
+sf::Color NORMAL_COLOR = sf::Color(77, 166, 255);
+sf::Color HOVER_COLOR = sf::Color(128, 191, 255);
+
+namespace UI {
+	Button::Button(sf::Vector2f pos, sf::Vector2f size, std::string msg, sf::Font& font, unsigned short char_size, sf::RenderWindow& window, Callback callback)
+		: window(window), isHovered(false),
+		onClickCallback(callback), isClicked(false),
+		TextBox(pos, size, msg, font, char_size, window)
+	{
+
+		// init le bouton
+		setShapeColor(NORMAL_COLOR);
+
+		// init le texte
+		setTextColor(sf::Color::White);
 	}
 
 	Button::~Button()
 	{
+		// unset le callback
+		onClickCallback = nullptr;
+
 	}
 
 	void Button::draw()
 	{
-		window.draw(shape);
-		window.draw(text);
+		TextBox::draw(window);
 	}
 
 	void Button::update()
 	{
+		// recupere la position de la souris
 		sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
 
-		isHovered = shape.getGlobalBounds().contains(mousePos) ? true : false;
+		// verifie si la souris est sur le bouton
+		isHovered = background.getGlobalBounds().contains(mousePos) ? true : false;
 
-		shape.setFillColor(isHovered ? sf::Color(128,191,255) : sf::Color(77,166,255));
+		if (isHovered) {
+			// si oui, change la couleur du bouton
+			setShapeColor(HOVER_COLOR);
 
+			// verifie si le bouton est clique et si le callback n'a pas deja ete appele et hover est true
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !isClicked) {
+				onClickCallback();
+				isClicked = true;
+			}
+			else if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				isClicked = false;
+			}
+		}
+		else {
+			// si non, remet la couleur par defaut
+			setShapeColor(NORMAL_COLOR);
+		}
 	}
-
-
 
 }

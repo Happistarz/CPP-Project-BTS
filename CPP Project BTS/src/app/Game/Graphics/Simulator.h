@@ -16,13 +16,17 @@ namespace GRAPHICS {
 
 		sf::Texture satelliteTexture;
 		sf::Sprite satellite;
+		sf::CircleShape satelliteOrbit;
 
 		sf::Texture stationTexture;
 		sf::Sprite station;
+
+		sf::RectangleShape debug;
 	public:
 		Simulator(sf::RenderWindow& window, std::string& root, READER::JsonReader& jsonReader);
 		~Simulator();
 
+		void update(float deltaTime);
 		void draw(sf::RenderWindow& window);
 	};
 }

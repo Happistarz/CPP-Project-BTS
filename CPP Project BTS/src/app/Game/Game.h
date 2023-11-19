@@ -30,6 +30,9 @@ namespace APP {
 		/// <param name="jsonReader"></param>
 		Game(std::string rootPath, READER::JsonReader* jsonReader);
 
+		/// <summary>
+		/// Detruit le jeu
+		/// </summary>
 		~Game();
 
 		/// <summary>

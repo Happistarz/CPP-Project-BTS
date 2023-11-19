@@ -15,6 +15,8 @@ namespace HELPER {
 	sf::Vector2f getShapePosition(const sf::Vector2f& f_centerPos, const sf::Vector2f& f_size, const sf::Vector2f& s_size);
 	sf::Vector2f getXShapePosition(const sf::Vector2f& f_centerPos, const sf::Vector2f& f_size, const sf::Vector2f& s_size);
 	sf::Vector2f getYShapePosition(const sf::Vector2f& f_centerPos, const sf::Vector2f& f_size, const sf::Vector2f& s_size);
+
+	void centerText(sf::Text& text, const sf::Vector2f& rectSize, const sf::Vector2f& rectPos);
 	/// <summary>
 	/// Retourne un nombre aleatoire entre deux nombres
 	/// </summary>
