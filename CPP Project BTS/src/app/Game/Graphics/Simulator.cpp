@@ -14,7 +14,7 @@ const float EARTHPIXELRADIUS = EARTHRADIUS / KMPERPIXEL;
 const float EARTHPIXELRADIUSRATIO = EARTHPIXELRADIUS / (EARTHPIXELPNG / 2);
 
 float angleSAT = 90.f;
-float rotSAT = 180.f;
+float angleSTA = 90.f;
 
 namespace GRAPHICS {
 	Simulator::Simulator(sf::RenderWindow& window, std::string& root, READER::JsonReader& jsonReader) {
@@ -37,10 +37,7 @@ namespace GRAPHICS {
 		earthTexture.loadFromFile(root + "data/assets/earth.png");
 		earth.setTexture(earthTexture);
 		earth.setScale(EARTHPIXELRADIUSRATIO, EARTHPIXELRADIUSRATIO);
-		earth.setOrigin(
-			earth.getLocalBounds().width / 2,
-			earth.getLocalBounds().height / 2
-		);
+		earth.setOrigin( earth.getLocalBounds().getSize() / 2.f );
 		earth.setPosition(
 			HELPER::getShapePosition(
 				sky.getPosition(),
@@ -81,7 +78,7 @@ namespace GRAPHICS {
 		stationTexture.loadFromFile(root + "data/assets/station.png");
 		station.setTexture(stationTexture);
 		station.setScale(0.15f, 0.15f);
-
+		station.setOrigin( station.getGlobalBounds().getSize() / 2.f );
 		station.setPosition(
 			HELPER::getShapePosition(
 				sky.getPosition(),
@@ -115,10 +112,10 @@ namespace GRAPHICS {
 
 	void Simulator::update(float deltaTime) {
 		// update satellite position
-		angleSAT += (1.0f * deltaTime) / TOTALPIXEL;
+		angleSAT += (.5f * deltaTime) / TOTALPIXEL;
 
-		float x = TOTALPIXEL * cos(angleSAT);
-		float y = TOTALPIXEL * sin(angleSAT);
+		float xa= TOTALPIXEL * cos(angleSAT);
+		float ya= TOTALPIXEL * sin(angleSAT);
 
 		//float rot = -atan2(y, x) * 180 / M_PI
 
@@ -126,18 +123,33 @@ namespace GRAPHICS {
 			HELPER::getShapePosition(
 				sky.getPosition(),
 				sky.getSize(),
-				sf::Vector2f(satellite.getGlobalBounds().width, satellite.getGlobalBounds().height)
-			) - sf::Vector2f(x, y)
+				satellite.getGlobalBounds().getSize()
+			) - sf::Vector2f(xa, ya)
 		);
+		//satellite.rotate(1.0f);
 
-		//satellite.rotate(1.f);
+		angleSTA += (.05f * deltaTime) / EARTHPIXELRADIUS;
 
-		// update earth rotation with rotate()
+		float xb = EARTHPIXELRADIUS * cos(angleSTA);
+		float yb = EARTHPIXELRADIUS * sin(angleSTA);
 
-		//angleEARTH += (EARTHSPEED * deltaTime) / EARTHPIXELRADIUS;
+		//station.setPosition(
+		//	HELPER::getShapePosition(
+		//		sky.getPosition(),
+		//		sky.getSize(),
+		//		station.getGlobalBounds().getSize()
+		//	) - sf::Vector2f(xb, yb)
+		//);
 
-
+		debug.setPosition(
+			HELPER::getShapePosition(
+				sky.getPosition(),
+				sky.getSize(),
+				debug.getGlobalBounds().getSize()
+			) - sf::Vector2f(xb, yb)
+		);
 		//debug.rotate(1.f);
 		//earth.rotate(1.0f);
+		station.rotate(1.0f);
 	}
 }

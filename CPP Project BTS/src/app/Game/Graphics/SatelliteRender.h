@@ -6,6 +6,8 @@
 #include "../../Helper/Functions.h"
 #include "../../Communication/Satellite.h"
 #include "../../Interface/Button.h"
+#include "../../Interface/TextBox.h"
+
 namespace GRAPHICS {
 	class SatelliteRender {
 	private:
@@ -17,10 +19,13 @@ namespace GRAPHICS {
 
 		METIER::Satellite* satellite;
 	public:
-		SatelliteRender(sf::RenderWindow& window);
+		SatelliteRender(sf::RenderWindow& window, sf::Font& font);
 		~SatelliteRender();
 
 		void draw(sf::RenderWindow& window);
+		void pingCommunicable();
+		void sendCommunicable(std::string msg);
+		void accept(sf::TcpSocket& connected) { satellite->accept(connected); }
 	};
 }
 
