@@ -5,6 +5,10 @@ namespace HELPER {
 	LogDisplayer::LogDisplayer(unsigned int maxChar, unsigned int maxLine) : maxChar(maxChar), maxLine(maxLine) {
 	}
 
+	LogDisplayer::~LogDisplayer() {
+		log.clear();
+	}
+
 	std::string LogDisplayer::buildString() {
 		std::string result = "";
 		for (std::string line : log) {

@@ -11,31 +11,6 @@
 
 
 namespace METIER {
-	/// <summary>
-	/// Classe Communicable qui gere les objets communicables
-	/// </summary>
-	/*class Communicable {
-	protected:
-		sf::IpAddress ip;
-		unsigned short port;
-		sf::TcpSocket client;
-		sf::TcpListener server;
-		sf::TcpSocket* connected;
-	public:
-		Communicable(const sf::IpAddress& ip, unsigned short port);
-		~Communicable();
-
-		bool startListening();
-		bool connect();
-		bool accept();
-		void disconnect();
-		virtual bool sendMessage(std::string message);
-		virtual std::string receiveMessage();
-		sf::IpAddress getIp() const { return ip; }
-		unsigned short getPort() const { return port; }
-		sf::TcpSocket& getClient() { return client; }
-	};*/
-
 	class Communicable {
 	private:
 		CORE::Client* client;
@@ -53,6 +28,7 @@ namespace METIER {
 		sf::IpAddress getIp() const { return client->getIp(); }
 		unsigned short getPort() const { return client->getPort(); }
 		sf::TcpSocket& getClient() { return client->getClient(); }
+		bool isConnected() const { return client->isConnected(); }
 	};
 }
 

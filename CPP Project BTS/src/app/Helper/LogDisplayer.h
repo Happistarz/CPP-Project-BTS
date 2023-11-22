@@ -26,6 +26,10 @@ namespace HELPER {
 		LogDisplayer(unsigned int maxChar, unsigned int maxLine);
 
 		/// <summary>
+		/// Destructeur de la classe
+		/// </summary>
+		~LogDisplayer();
+		/// <summary>
 		/// Retourne une string avec toutes les lignes de log
 		/// </summary>
 		/// <returns></returns>

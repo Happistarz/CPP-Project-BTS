@@ -24,6 +24,7 @@ namespace CORE {
 		sf::IpAddress getIp() const { return ip; }
 		unsigned short getPort() const { return remotePort; }
 		sf::TcpSocket& getClient() { return client; }
+		bool isConnected() const { return client.getRemoteAddress() != sf::IpAddress::None; }
 	};
 }
 

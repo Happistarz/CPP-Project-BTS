@@ -34,4 +34,8 @@ namespace HELPER {
 			)
 		);
 	}
+
+	sf::Vector2f getCenter(const sf::Vector2f& size) {
+		return sf::Vector2f(size.x / 2.f, size.y / 2.f);
+	}
 }

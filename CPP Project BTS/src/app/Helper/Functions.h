@@ -30,11 +30,19 @@ namespace HELPER {
 	/// <returns></returns>
 	sf::Vector2f getYShapePosition(const sf::Vector2f& f_centerPos, const sf::Vector2f& f_size, const sf::Vector2f& s_size);
 
+	/// <summary>
+	/// Centre un texte dans un rectangle
+	/// </summary>
+	/// <param name="text"></param>
+	/// <param name="rectSize"></param>
+	/// <param name="rectPos"></param>
 	void centerText(sf::Text& text, const sf::Vector2f& rectSize, const sf::Vector2f& rectPos);
 	/// <summary>
 	/// Retourne un nombre aleatoire entre deux nombres
 	/// </summary>
 	//int (*getRandomInt)(int, int) = [](int min, int max) { return rand() % (max - min + 1) + min; };
+
+	sf::Vector2f getCenter(const sf::Vector2f& size);
 }
 
 

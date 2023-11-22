@@ -25,7 +25,9 @@ namespace UI {
 		window.draw(text);
 	}
 
-	void TextBox::changeLocalTextPosition(sf::Vector2f position) {
-		text.setPosition(background.getPosition() + position);
+	void TextBox::changeLocalTextPosition(sf::Vector2f offset) {
+		text.setPosition(
+			background.getPosition() + text.getGlobalBounds().getSize() / 2.f + offset
+		);
 	}
 }

@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 #include "../Helper/Functions.h"
+#include <string>
+#include <iostream>
 
 namespace UI {
 	/// <summary>
@@ -53,7 +55,7 @@ namespace UI {
 		/// </summary>
 		/// <param name="color"></param>
 		void setOutlineColor(sf::Color color) { background.setOutlineColor(color); background.setOutlineThickness(2.f); }
-		void changeLocalTextPosition(sf::Vector2f position);
+		void changeLocalTextPosition(sf::Vector2f offset);
 		sf::RectangleShape getShape() { return background; }
 	};
 }
