@@ -13,7 +13,21 @@ namespace HELPER {
 	/// <param name="s_size"></param>
 	/// <returns></returns>
 	sf::Vector2f getShapePosition(const sf::Vector2f& f_centerPos, const sf::Vector2f& f_size, const sf::Vector2f& s_size);
+	/// <summary>
+	/// Retourne la position centrée sur l'axe X d'une forme en fonction de sa taille et de sa position centrale
+	/// </summary>
+	/// <param name="f_centerPos"></param>
+	/// <param name="f_size"></param>
+	/// <param name="s_size"></param>
+	/// <returns></returns>
 	sf::Vector2f getXShapePosition(const sf::Vector2f& f_centerPos, const sf::Vector2f& f_size, const sf::Vector2f& s_size);
+	/// <summary>
+	/// Retourne la position centrée sur l'axe Y d'une forme en fonction de sa taille et de sa position centrale
+	/// </summary>
+	/// <param name="f_centerPos"></param>
+	/// <param name="f_size"></param>
+	/// <param name="s_size"></param>
+	/// <returns></returns>
 	sf::Vector2f getYShapePosition(const sf::Vector2f& f_centerPos, const sf::Vector2f& f_size, const sf::Vector2f& s_size);
 
 	void centerText(sf::Text& text, const sf::Vector2f& rectSize, const sf::Vector2f& rectPos);

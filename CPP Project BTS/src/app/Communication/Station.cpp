@@ -11,7 +11,7 @@ namespace METIER {
 		sendMessage("ping");
 	}
 
-	void Station::sendSignal(Communicable& satellite, std::string message) {
+	void Station::sendSignal(std::string message) {
 		// envoi le message
 		sendMessage(message);
 	}

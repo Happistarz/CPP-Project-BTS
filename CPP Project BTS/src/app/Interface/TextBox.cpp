@@ -20,7 +20,12 @@ namespace UI {
 	}
 
 	void TextBox::draw(sf::RenderWindow& window) {
+		// affiche le background et le texte
 		window.draw(background);
 		window.draw(text);
+	}
+
+	void TextBox::changeLocalTextPosition(sf::Vector2f position) {
+		text.setPosition(background.getPosition() + position);
 	}
 }

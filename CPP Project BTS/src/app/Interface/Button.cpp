@@ -27,6 +27,7 @@ namespace UI {
 
 	void Button::draw()
 	{
+		// affiche le bouton
 		TextBox::draw(window);
 	}
 

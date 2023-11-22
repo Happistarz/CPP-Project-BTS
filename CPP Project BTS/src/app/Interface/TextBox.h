@@ -43,6 +43,18 @@ namespace UI {
 		/// </summary>
 		/// <param name="color"></param>
 		void setShapeColor(sf::Color color) { background.setFillColor(color); }
+		/// <summary>
+		/// Set le text
+		/// </summary>
+		/// <param name="text"></param>
+		void setText(std::string text) { this->text.setString(text); }
+		/// <summary>
+		/// Ajoute une bordure de 2.f
+		/// </summary>
+		/// <param name="color"></param>
+		void setOutlineColor(sf::Color color) { background.setOutlineColor(color); background.setOutlineThickness(2.f); }
+		void changeLocalTextPosition(sf::Vector2f position);
+		sf::RectangleShape getShape() { return background; }
 	};
 }
 

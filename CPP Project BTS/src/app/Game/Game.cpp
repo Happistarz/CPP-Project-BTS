@@ -34,9 +34,12 @@ namespace APP {
 		sf::Font font;
 		font.loadFromFile(rootPath + "data/assets/arial.ttf");
 
+		// initialisation des objets de la simulation
 		GRAPHICS::Simulator* simulator = new GRAPHICS::Simulator(window, rootPath, *jsonReader);
 		GRAPHICS::StationRender* stationRender = new GRAPHICS::StationRender(window);
-		GRAPHICS::SatelliteRender* satelliteRender = new GRAPHICS::SatelliteRender(window);
+		GRAPHICS::SatelliteRender* satelliteRender = new GRAPHICS::SatelliteRender(window, font);
+
+		// initialisation des objets de la fenetre
 		UI::Button* close = new UI::Button(
 			sf::Vector2f(0, 0),
 			sf::Vector2f(50.f, 50.f),
@@ -60,6 +63,7 @@ namespace APP {
 			// update de la fenetre
 			close->update();
 			simulator->update(deltaTime);
+			satelliteRender->update(deltaTime);
 
 			// affichage de la fenetre
 			window.clear();

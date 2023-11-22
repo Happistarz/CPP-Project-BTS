@@ -17,11 +17,31 @@ namespace METIER {
 	class Station : public Communicable {
 	private:
 	public:
+		/// <summary>
+		/// Constructeur de la classe Station
+		/// </summary>
+		/// <param name="ip"></param>
+		/// <param name="port"></param>
 		Station(std::string ip, int port);
+		/// <summary>
+		/// Destructeur de la classe Station
+		/// </summary>
 		~Station();
 
+		/// <summary>
+		/// Envoi un ping au satellite
+		/// </summary>
+		/// <param name="satellite"></param>
 		void pingSatellite(Communicable& satellite);
-		void sendSignal(Communicable& satellite, std::string message);
+		/// <summary>
+		/// Envoi un message au satellite
+		/// </summary>
+		/// <param name="message"></param>
+		void sendSignal(std::string message);
+		/// <summary>
+		/// Recoit un message du satellite
+		/// </summary>
+		/// <returns></returns>
 		std::string receiveSignal();
 
 	};

@@ -7,6 +7,7 @@
 #include "../../Communication/Satellite.h"
 #include "../../Interface/Button.h"
 #include "../../Interface/TextBox.h"
+#include "../../Helper/LogDisplayer.h"
 
 namespace GRAPHICS {
 	class SatelliteRender {
@@ -16,6 +17,12 @@ namespace GRAPHICS {
 		UI::Button* ping;
 		UI::Button* send;
 
+		UI::TextBox* connect;
+		UI::TextBox* log;
+		HELPER::LogDisplayer* logDisplayer;
+
+		sf::Text title;
+
 
 		METIER::Satellite* satellite;
 	public:
@@ -23,6 +30,7 @@ namespace GRAPHICS {
 		~SatelliteRender();
 
 		void draw(sf::RenderWindow& window);
+		void update(float deltaTime);
 		void pingCommunicable();
 		void sendCommunicable(std::string msg);
 		void accept(sf::TcpSocket& connected) { satellite->accept(connected); }
