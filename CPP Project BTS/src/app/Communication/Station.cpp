@@ -2,7 +2,7 @@
 
 namespace METIER {
 
-	Station::Station(std::string ip, int port) : Communicable::Communicable(ip, port, 5000) {}
+	Station::Station(std::string ip, int port, HELPER::LogDisplayer& logdisplayer) : Communicable::Communicable(ip, port, 5000, logdisplayer) {}
 
 	Station::~Station() {}
 

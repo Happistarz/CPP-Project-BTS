@@ -6,6 +6,7 @@
 #include <SFML/Network.hpp>
 #include <string>
 #include <iostream>
+#include "../../Helper/LogDisplayer.h"
 
 namespace CORE {
 	class Client {
@@ -13,14 +14,16 @@ namespace CORE {
 		sf::IpAddress ip;
 		unsigned short remotePort;
 		sf::TcpSocket client;
+
+		HELPER::LogDisplayer& logdisplayer;
 	public:
-		Client(const sf::IpAddress& ip, unsigned short remotePort);
+		Client(const sf::IpAddress& ip, unsigned short remotePort, HELPER::LogDisplayer& logdisplayer);
 		~Client();
 
 		bool connect();
 		void disconnect();
 		bool send(std::string message);
-		std::string recieve();
+		std::string receive();
 		sf::IpAddress getIp() const { return ip; }
 		unsigned short getPort() const { return remotePort; }
 		sf::TcpSocket& getClient() { return client; }

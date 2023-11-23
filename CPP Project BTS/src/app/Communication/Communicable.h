@@ -8,7 +8,7 @@
 #include <iostream>
 #include "Client/Client.h"
 #include "Serveur/Serveur.h"
-
+#include "../Helper/LogDisplayer.h"
 
 namespace METIER {
 	class Communicable {
@@ -16,7 +16,7 @@ namespace METIER {
 		CORE::Client* client;
 		CORE::Serveur* serveur;
 	public:
-		Communicable(const sf::IpAddress& ip, unsigned short listeningPort, unsigned short remotePort);
+		Communicable(const sf::IpAddress& ip, unsigned short listeningPort, unsigned short remotePort, HELPER::LogDisplayer& logdisplayer);
 		~Communicable();
 
 		bool startListening();
@@ -24,7 +24,8 @@ namespace METIER {
 		bool accept(sf::TcpSocket& connected);
 		void disconnect();
 		bool sendMessage(std::string message);
-		std::string receiveMessage(sf::TcpSocket& connected);
+		std::string receiveMessageServer(sf::TcpSocket& connected);
+		std::string receiveMessageClient();
 		sf::IpAddress getIp() const { return client->getIp(); }
 		unsigned short getPort() const { return client->getPort(); }
 		sf::TcpSocket& getClient() { return client->getClient(); }

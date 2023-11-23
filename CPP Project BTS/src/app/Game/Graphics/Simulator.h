@@ -21,6 +21,9 @@ namespace GRAPHICS {
 		sf::Texture stationTexture;
 		sf::Sprite station;
 
+		sf::RectangleShape lineConnection;
+		bool drawLineConnection;
+
 		sf::RectangleShape debug;
 	public:
 		Simulator(sf::RenderWindow& window, std::string& root, READER::JsonReader& jsonReader);
@@ -28,6 +31,7 @@ namespace GRAPHICS {
 
 		void update(float deltaTime);
 		void draw(sf::RenderWindow& window);
+		void setDrawLineConnection(bool drawLineConnection) { this->drawLineConnection = drawLineConnection;}
 	};
 }
 #endif

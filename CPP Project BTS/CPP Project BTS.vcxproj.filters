@@ -104,6 +104,9 @@
     <ClInclude Include="src\app\Helper\LogDisplayer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="src\app\Game\Constants.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\data\json\test.json" />

@@ -30,4 +30,8 @@ namespace UI {
 			background.getPosition() + text.getGlobalBounds().getSize() / 2.f + offset
 		);
 	}
+
+	void TextBox::centerText() {
+		HELPER::centerText(text, background.getSize(), background.getPosition());
+	}
 }

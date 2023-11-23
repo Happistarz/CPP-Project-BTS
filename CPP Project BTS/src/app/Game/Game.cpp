@@ -34,10 +34,22 @@ namespace APP {
 		sf::Font font;
 		font.loadFromFile(rootPath + "data/assets/arial.ttf");
 
+		// initialisation des sockets
+		sf::TcpSocket stationConnection;
+		sf::TcpSocket satelliteConnection;
+
 		// initialisation des objets de la simulation
 		GRAPHICS::Simulator* simulator = new GRAPHICS::Simulator(window, rootPath, *jsonReader);
-		GRAPHICS::StationRender* stationRender = new GRAPHICS::StationRender(window);
+
+		GRAPHICS::StationRender* stationRender = new GRAPHICS::StationRender(window, font);
 		GRAPHICS::SatelliteRender* satelliteRender = new GRAPHICS::SatelliteRender(window, font);
+
+		satelliteRender->connectCommunicable();
+		stationRender->accept(satelliteConnection);
+
+		stationRender->connectCommunicable();
+		satelliteRender->accept(stationConnection);
+
 
 		// initialisation des objets de la fenetre
 		UI::Button* close = new UI::Button(
@@ -49,6 +61,7 @@ namespace APP {
 			window,
 			[this]() { window.close(); }
 		);
+
 		// lancement de la boucle principale
 		while (window.isOpen()) {
 			// calcul du delta time en ms pour les animations et les deplacements
@@ -64,6 +77,7 @@ namespace APP {
 			close->update();
 			simulator->update(deltaTime);
 			satelliteRender->update(deltaTime);
+			stationRender->update(deltaTime);
 
 			// affichage de la fenetre
 			window.clear();
@@ -76,6 +90,9 @@ namespace APP {
 			// affichage du buffer
 			window.display();
 		}
+
+		stationRender->getCommunicable()->disconnect();
+		satelliteRender->getCommunicable()->disconnect();
 	}
 
 	void Game::processEvents() {

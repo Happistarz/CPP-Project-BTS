@@ -2,9 +2,9 @@
 
 namespace METIER {
 
-	Communicable::Communicable(const sf::IpAddress& ip, unsigned short listeningPort, unsigned short remotePort) {
-		serveur = new CORE::Serveur(listeningPort);
-		client = new CORE::Client(ip, remotePort);
+	Communicable::Communicable(const sf::IpAddress& ip, unsigned short listeningPort, unsigned short remotePort, HELPER::LogDisplayer& logdisplayer)  {
+		serveur = new CORE::Serveur(listeningPort, logdisplayer);
+		client = new CORE::Client(ip, remotePort, logdisplayer);
 
 		serveur->startListening();
 	}
@@ -34,7 +34,11 @@ namespace METIER {
 		return client->send(message);
 	}
 
-	std::string Communicable::receiveMessage(sf::TcpSocket& connected) {
-		return serveur->recieve(connected);
+	std::string Communicable::receiveMessageServer(sf::TcpSocket& connected) {
+		return serveur->receive(connected);
+	}
+
+	std::string Communicable::receiveMessageClient() {
+		return client->receive();
 	}
 }

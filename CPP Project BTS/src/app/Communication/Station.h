@@ -6,6 +6,7 @@
 #include <SFML/Network.hpp>
 #include <string>
 #include "Communicable.h"
+#include "../Helper/LogDisplayer.h"
 
 namespace METIER {
 
@@ -22,7 +23,7 @@ namespace METIER {
 		/// </summary>
 		/// <param name="ip"></param>
 		/// <param name="port"></param>
-		Station(std::string ip, int port);
+		Station(std::string ip, int port, HELPER::LogDisplayer& logdisplayer);
 		/// <summary>
 		/// Destructeur de la classe Station
 		/// </summary>

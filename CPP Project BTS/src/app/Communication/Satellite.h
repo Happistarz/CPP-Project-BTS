@@ -6,6 +6,7 @@
 #include <SFML/Network.hpp>
 #include <string>
 #include "Communicable.h"
+#include "../Helper/LogDisplayer.h"
 
 namespace METIER {
 	/// <summary>
@@ -19,7 +20,8 @@ namespace METIER {
 		/// </summary>
 		/// <param name="ip"></param>
 		/// <param name="port"></param>
-		Satellite(std::string ip, int port);
+		/// <param name="logdisplayer"></param>
+		Satellite(std::string ip, int port, HELPER::LogDisplayer& logdisplayer);
 		/// <summary>
 		/// Destructeur par defaut de satellite
 		/// </summary>

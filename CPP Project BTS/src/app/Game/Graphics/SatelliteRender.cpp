@@ -1,23 +1,13 @@
 #include "SatelliteRender.h"
 
-unsigned int charSize = 20U;
-unsigned int LOGLINECOUNT = 10U;
-unsigned int LOGLINESIZE = 25U;
-
-sf::Vector2f BUTTON_SIZE = sf::Vector2f(175.f, 50.f);
-sf::Vector2f TEXTBOX_SIZE = sf::Vector2f(150.f, 50.f);
-sf::Vector2f LOG_SIZE = sf::Vector2f(charSize * LOGLINESIZE + 10.f, charSize * LOGLINECOUNT + 10.f);
-
-sf::Color CONNECTED_COLOR = sf::Color(0, 255, 0);
-sf::Color DISCONNECTED_COLOR = sf::Color(255, 0, 0);
-
-int t = 0;
-int a = 0;
-
 namespace GRAPHICS {
 	SatelliteRender::SatelliteRender(sf::RenderWindow& window, sf::Font& font) {
-		satellite = new METIER::Satellite("127.0.0.1", 5000);
-		satellite->startListening();
+
+		int port = 5000;
+
+		logDisplayer = new HELPER::LogDisplayer(CONSTANT::LOGLINESIZE + 27, CONSTANT::LOGLINECOUNT);
+		satellite = new METIER::Satellite(sf::IpAddress::getLocalAddress().toString(), port, *logDisplayer);
+		satellite->connect();
 
 
 		sf::Vector2f backgroundSize(window.getSize().x / 3, window.getSize().y / 2);
@@ -43,12 +33,12 @@ namespace GRAPHICS {
 			HELPER::getXShapePosition(
 				background.getPosition(),
 				backgroundSize / 2.f,
-				BUTTON_SIZE
+				CONSTANT::BUTTON_SIZE
 			) + sf::Vector2f(0.f, satelliteBox.getGlobalBounds().height / 1.3f),
-			BUTTON_SIZE,
+			CONSTANT::BUTTON_SIZE,
 			"Ping",
 			font,
-			charSize,
+			CONSTANT::charSize,
 			window,
 			[this]() {pingCommunicable(); }
 		);
@@ -57,12 +47,12 @@ namespace GRAPHICS {
 			HELPER::getXShapePosition(
 				sf::Vector2f(background.getPosition().x + backgroundSize.x / 2.f, background.getPosition().y),
 				backgroundSize / 2.f,
-				BUTTON_SIZE
+				CONSTANT::BUTTON_SIZE
 			) + sf::Vector2f(0.f, satelliteBox.getGlobalBounds().height / 1.3f),
-			BUTTON_SIZE,
+			CONSTANT::BUTTON_SIZE,
 			"Send",
 			font,
-			charSize,
+			CONSTANT::charSize,
 			window,
 			[this]() {sendCommunicable("MESSAGE DE LA FRANCE OUI"); }
 		);
@@ -72,31 +62,29 @@ namespace GRAPHICS {
 			HELPER::getXShapePosition(
 				background.getPosition(),
 				backgroundSize,
-				TEXTBOX_SIZE
+				CONSTANT::TEXTBOX_SIZE
 			),
-			TEXTBOX_SIZE,
+			CONSTANT::TEXTBOX_SIZE,
 			"Deconnected",
 			font,
-			charSize,
+			CONSTANT::charSize,
 			window
 		);
 		connect->setTextColor(sf::Color::White);
-		connect->setShapeColor(DISCONNECTED_COLOR);
+		connect->setShapeColor(CONSTANT::DISCONNECTED_COLOR);
 
-
-		//////// continuer le log displayer pour qu'il affiche les messages dans le textbox
-		logDisplayer = new HELPER::LogDisplayer(LOGLINESIZE - 5, LOGLINECOUNT - 2);
+		 
 
 		log = new UI::TextBox(
 			HELPER::getShapePosition(
 				background.getPosition(),
 				backgroundSize,
-				LOG_SIZE
+				CONSTANT::LOG_SIZE
 			),
-			LOG_SIZE,
+			CONSTANT::LOG_SIZE,
 			"",
 			font,
-			charSize,
+			17U,
 			window
 		);
 		log->setTextColor(sf::Color::White);
@@ -104,9 +92,9 @@ namespace GRAPHICS {
 		log->setOutlineColor(sf::Color::White);
 		log->changeLocalTextPosition(sf::Vector2f(7.f, 7.f));
 
-		title.setString("Satellite");
+		title.setString("Satellite | S:" + std::to_string(port));
 		title.setFont(font);
-		title.setCharacterSize(charSize);
+		title.setCharacterSize(CONSTANT::charSize);
 		title.setFillColor(sf::Color::White);
 		title.setPosition(
 			HELPER::getYShapePosition(
@@ -133,16 +121,16 @@ namespace GRAPHICS {
 
 		if (satellite->isConnected()) {
 			connect->setText("Connected");
-			connect->setShapeColor(CONNECTED_COLOR);
+			connect->setShapeColor(CONSTANT::CONNECTED_COLOR);
+			connect->setTextColor(sf::Color::Black);
 		}
 		else {
 			connect->setText("Disconnected");
-			connect->setShapeColor(DISCONNECTED_COLOR);
+			connect->setShapeColor(CONSTANT::DISCONNECTED_COLOR);
+			connect->setTextColor(sf::Color::White);
 		}
-		if (a > 50) return;
-		a++;
-		logDisplayer->addLine("Log aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + std::to_string(t));
-		t++;
+
+		connect->centerText();
 
 		log->setText(logDisplayer->buildString());
 	}
