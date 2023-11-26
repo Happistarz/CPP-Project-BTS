@@ -33,22 +33,23 @@ namespace APP {
 		// initialisation des objets
 		sf::Font font;
 		font.loadFromFile(rootPath + "data/assets/arial.ttf");
-
-		// initialisation des sockets
-		sf::TcpSocket stationConnection;
-		sf::TcpSocket satelliteConnection;
+		sf::Font terminal;
+		terminal.loadFromFile(rootPath + "data/assets/VT323.ttf");
 
 		// initialisation des objets de la simulation
 		GRAPHICS::Simulator* simulator = new GRAPHICS::Simulator(window, rootPath, *jsonReader);
 
-		GRAPHICS::StationRender* stationRender = new GRAPHICS::StationRender(window, font);
-		GRAPHICS::SatelliteRender* satelliteRender = new GRAPHICS::SatelliteRender(window, font);
+		// init des objets de la station et du satellite
+		GRAPHICS::StationRender* stationRender = new GRAPHICS::StationRender(window, font, terminal);
+		GRAPHICS::SatelliteRender* satelliteRender = new GRAPHICS::SatelliteRender(window, font, terminal);
 
-		satelliteRender->connectCommunicable();
-		stationRender->accept(satelliteConnection);
+		// connexion du satellite et de la station
+		sf::TcpSocket stationConnected;
+		sf::TcpSocket satelliteConnected;
 
-		stationRender->connectCommunicable();
-		satelliteRender->accept(stationConnection);
+		// initialisation des sockets
+		stationRender->getCommunicable()->init(satelliteRender->getCommunicable(), stationConnected);
+		satelliteRender->getCommunicable()->init(stationRender->getCommunicable(), satelliteConnected);
 
 
 		// initialisation des objets de la fenetre
@@ -62,6 +63,7 @@ namespace APP {
 			[this]() { window.close(); }
 		);
 
+
 		// lancement de la boucle principale
 		while (window.isOpen()) {
 			// calcul du delta time en ms pour les animations et les deplacements
@@ -70,14 +72,16 @@ namespace APP {
 
 			// gestion des evenements
 			processEvents();
-			// gestion des inputs
-			handleInput();
 
 			// update de la fenetre
 			close->update();
 			simulator->update(deltaTime);
-			satelliteRender->update(deltaTime);
+
+			// update de la station et du satellite
 			stationRender->update(deltaTime);
+			satelliteRender->update(deltaTime);
+
+			// update des sockets
 
 			// affichage de la fenetre
 			window.clear();
@@ -91,8 +95,12 @@ namespace APP {
 			window.display();
 		}
 
+		// deconnexion des sockets
 		stationRender->getCommunicable()->disconnect();
+		stationRender->getCommunicable()->stopListeningThread();
+
 		satelliteRender->getCommunicable()->disconnect();
+		satelliteRender->getCommunicable()->stopListeningThread();
 	}
 
 	void Game::processEvents() {
@@ -104,9 +112,5 @@ namespace APP {
 				window.close();
 			}
 		}
-	}
-
-	void Game::handleInput() {
-
 	}
 }

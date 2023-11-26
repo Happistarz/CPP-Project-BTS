@@ -1,21 +1,26 @@
 #include "SatelliteRender.h"
 
 namespace GRAPHICS {
-	SatelliteRender::SatelliteRender(sf::RenderWindow& window, sf::Font& font) {
+	SatelliteRender::SatelliteRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term) {
 
+		// initialisation des objets
 		int port = 5000;
 
+		// initialisation de la communication
 		logDisplayer = new HELPER::LogDisplayer(CONSTANT::LOGLINESIZE + 27, CONSTANT::LOGLINECOUNT);
 		satellite = new METIER::Satellite(sf::IpAddress::getLocalAddress().toString(), port, *logDisplayer);
-		satellite->connect();
 
+		// initialisation des formes
 
 		sf::Vector2f backgroundSize(window.getSize().x / 3, window.getSize().y / 2);
 		float borderSize = 2.f;
+
+		// background
 		background.setSize(backgroundSize);
 		background.setPosition(window.getSize().x / 1.5, window.getSize().y / 2);
 		background.setFillColor(sf::Color::Cyan);
 
+		// satelliteBox
 		satelliteBox.setSize(backgroundSize - sf::Vector2f(20.f, 10.f));
 		satelliteBox.setPosition(
 			HELPER::getXShapePosition(
@@ -29,6 +34,10 @@ namespace GRAPHICS {
 		satelliteBox.setOutlineThickness(borderSize);
 		satelliteBox.setOutlineColor(sf::Color::White);
 
+
+		// initialisation des boutons
+
+		// ping
 		ping = new UI::Button(
 			HELPER::getXShapePosition(
 				background.getPosition(),
@@ -43,6 +52,8 @@ namespace GRAPHICS {
 			[this]() {pingCommunicable(); }
 		);
 
+
+		// send
 		send = new UI::Button(
 			HELPER::getXShapePosition(
 				sf::Vector2f(background.getPosition().x + backgroundSize.x / 2.f, background.getPosition().y),
@@ -57,7 +68,7 @@ namespace GRAPHICS {
 			[this]() {sendCommunicable("MESSAGE DE LA FRANCE OUI"); }
 		);
 
-
+		// initialisation des textes
 		connect = new UI::TextBox(
 			HELPER::getXShapePosition(
 				background.getPosition(),
@@ -73,8 +84,8 @@ namespace GRAPHICS {
 		connect->setTextColor(sf::Color::White);
 		connect->setShapeColor(CONSTANT::DISCONNECTED_COLOR);
 
-		 
 
+		// log
 		log = new UI::TextBox(
 			HELPER::getShapePosition(
 				background.getPosition(),
@@ -83,7 +94,7 @@ namespace GRAPHICS {
 			),
 			CONSTANT::LOG_SIZE,
 			"",
-			font,
+			term,
 			17U,
 			window
 		);
@@ -92,6 +103,8 @@ namespace GRAPHICS {
 		log->setOutlineColor(sf::Color::White);
 		log->changeLocalTextPosition(sf::Vector2f(7.f, 7.f));
 
+
+		// title
 		title.setString("Satellite | S:" + std::to_string(port));
 		title.setFont(font);
 		title.setCharacterSize(CONSTANT::charSize);
@@ -116,9 +129,13 @@ namespace GRAPHICS {
 	}
 
 	void SatelliteRender::update(float deltaTime) {
+
+		// update les objets
 		ping->update();
 		send->update();
 
+
+		// update les textes
 		if (satellite->isConnected()) {
 			connect->setText("Connected");
 			connect->setShapeColor(CONSTANT::CONNECTED_COLOR);
@@ -132,10 +149,12 @@ namespace GRAPHICS {
 
 		connect->centerText();
 
+		// affiche le log
 		log->setText(logDisplayer->buildString());
 	}
 
 	void SatelliteRender::draw(sf::RenderWindow& window) {
+		// affiche les formes
 		window.draw(satelliteBox);
 		ping->draw();
 		send->draw();
@@ -145,10 +164,12 @@ namespace GRAPHICS {
 	}
 
 	void SatelliteRender::pingCommunicable() {
+		// envoie un ping
 		satellite->sendMessage("Ping");
 	}
 
 	void SatelliteRender::sendCommunicable(std::string msg) {
+		// envoie un message
 		satellite->sendMessage(msg);
 	}
 }

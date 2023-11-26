@@ -5,6 +5,7 @@
 #include <SFML/Network.hpp>
 #include <string>
 #include <iostream>
+#include <future>
 #include "../../Helper/LogDisplayer.h"
 namespace CORE {
 	class Serveur {
@@ -12,7 +13,7 @@ namespace CORE {
 		unsigned short port;
 		sf::TcpListener server;
 
-	HELPER::LogDisplayer& logdisplayer;
+		HELPER::LogDisplayer& logdisplayer;
 	public:
 		Serveur(unsigned short port, HELPER::LogDisplayer& logdisplayer);
 		~Serveur();

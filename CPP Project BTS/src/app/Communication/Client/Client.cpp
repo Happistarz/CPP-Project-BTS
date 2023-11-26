@@ -21,12 +21,21 @@ namespace CORE {
 
 	bool Client::send(std::string message) {
 		size_t sent;
-		if (client.send(message.c_str(), message.size() + 1, sent) != sf::Socket::Done) {
-			std::cerr << "Error while sending" << std::endl;
-			logdisplayer.addLine("CLIENT | Erreur d'envoi de message");
+		try {
+			if (client.send(message.c_str(), message.size() + 1, sent) != sf::Socket::Done) {
+				std::cerr << "Error while sending" << std::endl;
+				logdisplayer.addLine("CLIENT | Erreur d'envoi de message");
+				return false;
+			}
+			logdisplayer.addLine("CLIENT | ENVOYE: " + message);
+			return true;
+		}
+		catch (std::exception e) {
+			//std::cerr << "Error while sending" << std::endl;
+			//logdisplayer.addLine("CLIENT | Erreur d'envoi de message");
+			std::cerr << e.what() << std::endl;
 			return false;
 		}
-		return true;
 	}
 
 	std::string Client::receive() {

@@ -37,11 +37,13 @@ namespace GRAPHICS {
 		/// </summary>
 		/// <param name="window"></param>
 		/// <param name="font"></param>
-		StationRender(sf::RenderWindow& window, sf::Font& font);
+		StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term);
 		/// <summary>
 		/// Destructeur
 		/// </summary>
 		~StationRender();
+
+		//void startListeningThread() { station->startListeningThread(); }
 
 		/// <summary>
 		/// Affiche la station

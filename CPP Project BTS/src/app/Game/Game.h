@@ -4,6 +4,7 @@
 #define GAME_H
 
 #include <SFML/Graphics.hpp>
+#include <thread>
 #include "Graphics/Simulator.h"
 #include "../Reader/JsonReader.h"
 #include "Graphics/StationRender.h"
@@ -44,11 +45,6 @@ namespace APP {
 		/// Recupere les evenements de la fenetre et les traite
 		/// </summary>
 		void processEvents();
-
-		/// <summary>
-		/// Recupere les entrees clavier et les traite
-		/// </summary>
-		void handleInput();
 
 	};
 }

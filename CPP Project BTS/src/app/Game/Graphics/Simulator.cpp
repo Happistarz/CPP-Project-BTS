@@ -19,9 +19,14 @@ float angleSTA = 0.f;
 
 namespace GRAPHICS {
 	Simulator::Simulator(sf::RenderWindow& window, std::string& root, READER::JsonReader& jsonReader) : drawLineConnection(false) {
+
+		// initialisation des objets
 		sf::Vector2f backgroundSize(window.getSize().x / 1.5, window.getSize().y);
 		float borderSize = 2.f;
 
+		// initialisation des formes
+
+		// sky
 		sky.setSize(backgroundSize - sf::Vector2f(20.f, 20.f));
 		sky.setFillColor(sf::Color(7, 22, 48));
 		sky.setOutlineThickness(borderSize);
@@ -35,10 +40,11 @@ namespace GRAPHICS {
 			)
 		);
 
+		// earth
 		earthTexture.loadFromFile(root + "data/assets/earth.png");
 		earth.setTexture(earthTexture);
 		earth.setScale(EARTHPIXELRADIUSRATIO, EARTHPIXELRADIUSRATIO);
-		earth.setOrigin( earth.getLocalBounds().getSize() / 2.f );
+		earth.setOrigin(earth.getLocalBounds().getSize() / 2.f);
 		earth.setPosition(
 			HELPER::getShapePosition(
 				sky.getPosition(),
@@ -47,6 +53,7 @@ namespace GRAPHICS {
 			)
 		);
 
+		// satelliteOrbit
 		satelliteOrbit.setRadius(TOTALPIXELRADIUS);
 		satelliteOrbit.setPointCount(100);
 		satelliteOrbit.setFillColor(sf::Color::Transparent);
@@ -60,26 +67,25 @@ namespace GRAPHICS {
 			)
 		);
 
+		// satellite
 		satelliteTexture.loadFromFile(root + "data/assets/satellite.png");
 		satellite.setTexture(satelliteTexture);
 		satellite.setScale(0.15f, 0.15f);
-		//satellite.setOrigin(
-		//	satellite.getLocalBounds().width / 2,
-		//	satellite.getLocalBounds().height / 2
-		//);
+		satellite.setOrigin(satellite.getGlobalBounds().getSize() / 2.f);
 		satellite.setRotation(180.f);
 		satellite.setPosition(
 			HELPER::getShapePosition(
 				sky.getPosition(),
 				sky.getSize(),
 				satellite.getGlobalBounds().getSize()
-			) - sf::Vector2f(0.f, TOTALPIXELRADIUS)
+			)
 		);
 
+		// station
 		stationTexture.loadFromFile(root + "data/assets/station.png");
 		station.setTexture(stationTexture);
 		station.setScale(0.15f, 0.15f);
-		station.setOrigin( station.getGlobalBounds().getSize() / 2.f );
+		station.setOrigin(station.getGlobalBounds().getSize() / 2.f);
 		station.setPosition(
 			HELPER::getShapePosition(
 				sky.getPosition(),
@@ -88,16 +94,16 @@ namespace GRAPHICS {
 			) - sf::Vector2f(0.f, EARTHPIXELRADIUS)
 		);
 
-
-		debug.setFillColor(sf::Color::Transparent);
+		// debug
+		/*debug.setFillColor(sf::Color::Transparent);
 		debug.setOutlineThickness(1.f);
 		debug.setOutlineColor(sf::Color::Red);
 		debug.setSize(station.getGlobalBounds().getSize());
 		debug.setPosition(
 			station.getPosition()
-		);
+		);*/
 
-		// line connecting satellite and station, the size of the line is the distance between the two
+		// lineConnection
 		lineConnection.setFillColor(sf::Color::Red);
 		lineConnection.setSize(sf::Vector2f(5.f, TOTALPIXELRADIUS - EARTHPIXELRADIUS));
 		lineConnection.setOrigin(lineConnection.getSize() / 2.f);
@@ -111,17 +117,18 @@ namespace GRAPHICS {
 
 	}
 
-	Simulator::~Simulator() {
-
-	}
+	Simulator::~Simulator() {}
 
 	void Simulator::draw(sf::RenderWindow& window) {
+		// affiche les formes
 		window.draw(sky);
+		window.draw(earth);
 		window.draw(satelliteOrbit);
 		window.draw(satellite);
-		window.draw(earth);
 		window.draw(station);
-		//window.draw(debug);
+
+		// affiche la ligne de connexion si il y a un signal envoye
+		if (!drawLineConnection) return;
 		window.draw(lineConnection);
 	}
 
@@ -181,39 +188,47 @@ namespace GRAPHICS {
 		//	) - sf::Vector2f(xb, yb)
 		//);
 
-		angleSAT += 0.005 * deltaTime;
-		angleSTAorbit += 0.003 * deltaTime;
+		//angleSAT += 0.005 * deltaTime;
+		//angleSTAorbit += 0.003 * deltaTime;
 
-		sf::Vector2f earthCenter = earth.getPosition() + sf::Vector2f(earth.getGlobalBounds().width / 2, earth.getGlobalBounds().height / 2);
+		//sf::Vector2f earthCenter = earth.getPosition() + sf::Vector2f(earth.getGlobalBounds().width / 2, earth.getGlobalBounds().height / 2);
 
-		sf::Vector2f satellitePosition = sf::Vector2f(
-			earthCenter.x + cos(angleSAT) * TOTALPIXELRADIUS,
-			earthCenter.y + sin(angleSAT) * TOTALPIXELRADIUS
-		);
+		//sf::Vector2f satellitePosition = sf::Vector2f(
+		//	earthCenter.x + cos(angleSAT) * TOTALPIXELRADIUS,
+		//	earthCenter.y + sin(angleSAT) * TOTALPIXELRADIUS
+		//);
 
-		satellite.setPosition(
-			HELPER::getShapePosition(
-				sky.getPosition(),
-				sky.getSize(),
-				satellite.getGlobalBounds().getSize()
-			)
-		);
+		//satellite.setPosition(
+		//	satellitePosition
+		//);
 
-		sf::Vector2f stationPosition = sf::Vector2f(
-			earthCenter.x + cos(angleSTAorbit) * EARTHPIXELRADIUS,
-			earthCenter.y + sin(angleSTAorbit) * EARTHPIXELRADIUS
-		);
+		//station.setPosition(
+		//	HELPER::getShapePosition(
+		//		sky.getPosition(),
+		//		sky.getSize(),
+		//		station.getGlobalBounds().getSize()
+		//	)
+		//);
 
-		station.setPosition(stationPosition - sf::Vector2f(station.getGlobalBounds().width / 2, station.getGlobalBounds().height / 2));
-		
-		sf::Vector2f direction = satellite.getPosition() - station.getPosition();
-		float angle = atan2(direction.y, direction.x) * 180 / M_PI;
-		station.setRotation(angle + 90.f);
+		//sf::Vector2f direction = satellite.getPosition() - station.getPosition();
+		//float angle = atan2(direction.y, direction.x) * 180 / M_PI;
+		//station.setRotation(angle + 90.f);
 
-		direction = station.getPosition() - satellite.getPosition();
-		angle = atan2(direction.y, direction.x) * 180 / M_PI;
-		satellite.setRotation(angle + 90.f);
+		//direction = station.getPosition() - satellite.getPosition();
+		//angle = atan2(direction.y, direction.x) * 180 / M_PI;
+		//satellite.setRotation(angle + 90.f);
 
+		// ------------------------------ //
+
+		// faire tourner la station autour de la terre
+		// faire tourner le satellite autour de la terre
+		// tourner les 2 objets pour qu'ils se fassent face
+		// faire une ligne entre les 2 objets
+
+		// continuer le receiveSignal
+		// le faire afficher dans le logDisplayer
+
+		// ------------------------------ //
 
 		//debug.rotate(1.f);
 		earth.rotate(.05f);

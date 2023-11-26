@@ -29,6 +29,8 @@ namespace METIER {
 		/// </summary>
 		~Station();
 
+
+		//void startListeningThread() { Communicable::startListeningThread(); }
 		/// <summary>
 		/// Envoi un ping au satellite
 		/// </summary>

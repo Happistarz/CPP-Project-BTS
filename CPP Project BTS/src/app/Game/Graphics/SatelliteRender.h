@@ -37,12 +37,13 @@ namespace GRAPHICS {
 		/// </summary>
 		/// <param name="window"></param>
 		/// <param name="font"></param>
-		SatelliteRender(sf::RenderWindow& window, sf::Font& font);
+		SatelliteRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term);
 		/// <summary>
 		/// Destructeur
 		/// </summary>
 		~SatelliteRender();
 
+		//void startListeningThread() { satellite->startListeningThread(); }
 		/// <summary>
 		/// Affiche le satellite
 		/// </summary>
@@ -76,6 +77,12 @@ namespace GRAPHICS {
 		/// </summary>
 		/// <returns></returns>
 		METIER::Communicable* getCommunicable() { return satellite; }
+
+		/// <summary>
+		/// Recoit un message
+		/// </summary>
+		/// <param name="connected"></param>
+		//std::string receiveMessage(sf::TcpSocket& connected) { satellite->receiveMessageServer(connected); }
 	};
 }
 

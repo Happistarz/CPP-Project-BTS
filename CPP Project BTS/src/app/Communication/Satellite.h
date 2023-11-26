@@ -27,6 +27,8 @@ namespace METIER {
 		/// </summary>
 		~Satellite();
 
+		//void startListeningThread() { Communicable::startListeningThread(); }
+
 		/// <summary>
 		/// Envoie un ping a une station
 		/// </summary>

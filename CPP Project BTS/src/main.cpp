@@ -1,19 +1,29 @@
 #define DEV 0
 
-#if DEV
-#include "app/Communication/Communicable.h"
-#include <SFML/Network.hpp>
+#if DEV == 2 || DEV == 1
+//#include <windows.h>
+//#include <thread>
 #include <iostream>
 #include <iomanip>
-#else !DEV
+#include "app/Communication/Communicable.h"
+#include <SFML/Network.hpp>
+#else
 #include "app/Game/Game.h"
 #include "app/Reader/JsonReader.h"
+#include "app/Communication/Communicable.h"
+#include "app/Helper/LogDisplayer.h"
 #endif // DEV
 
-
+/// <summary>
+/// Entrée principale du programme
+/// </summary>
+/// <returns></returns>
 int main() {
+	// DEV = 0 : lancement du jeu
+	// DEV = 1 : test de la communication
+	// DEV = 2 : test thread
 
-#if !DEV
+#if DEV == 0
 	// recupere le chemin du projet pour les fichiers
 	std::string rootPath = __FILE__;
 	rootPath = rootPath.substr(0, rootPath.find("main.cpp"));
@@ -31,7 +41,7 @@ int main() {
 	delete game;
 	delete jsonReader;
 
-#else 
+#elif DEV == 1
 	// test
 
 	METIER::Communicable* station = new METIER::Communicable(sf::IpAddress::getLocalAddress(), 6000, 5000);
@@ -65,6 +75,37 @@ int main() {
 	// le nouveau socket est utilise pour communiquer avec le client
 	// le client et le serveur peuvent envoyer et recevoir des messages sur leur socket
 	// le client et le nouveau serveur peuvent se deconnecter
+#else 
+	// test thread
+
+	HELPER::LogDisplayer logdisplayer(10, 10);
+	METIER::Communicable* station = new METIER::Communicable(sf::IpAddress::getLocalAddress(), 6000, 5000, logdisplayer);
+	METIER::Communicable* satellite = new METIER::Communicable(sf::IpAddress::getLocalAddress(), 5000, 6000, logdisplayer);
+
+	sf::TcpSocket stationco;
+	satellite->connect();
+	if (station->accept(stationco)) {
+		station->startListeningThread(stationco);
+	}
+	sf::TcpSocket satelliteco;
+	station->connect();
+	if (satellite->accept(satelliteco)) {
+		satellite->startListeningThread(satelliteco);
+	}
+
+	std::string message = "yo";
+	satellite->sendMessage(message);
+
+	station->sendMessage(message + "2");
+
+	station->stopListeningThread();
+	satellite->stopListeningThread();
+
+	station->disconnect();
+	satellite->disconnect();
+
+	std::cout << "Appuyez sur une touche pour quitter..." << std::endl;
+	std::cin.get();
 
 #endif // DEV
 

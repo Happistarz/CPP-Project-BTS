@@ -18,7 +18,7 @@ namespace METIER {
 
 	std::string Satellite::receiveSignal() {
 		// recoit le message
-		//return receiveMessage();
-		return "";
+		//return receiveMessageClient();
+		return "aaa";
 	}
 }
