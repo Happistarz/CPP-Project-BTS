@@ -21,7 +21,7 @@ namespace METIER {
 		/// <param name="ip"></param>
 		/// <param name="port"></param>
 		/// <param name="logdisplayer"></param>
-		Satellite(std::string ip, int port, HELPER::LogDisplayer& logdisplayer);
+		Satellite(std::string ip, int port, HELPER::LogDisplayer& logdisplayer, sf::TcpSocket& connected);
 		/// <summary>
 		/// Destructeur par defaut de satellite
 		/// </summary>

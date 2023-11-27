@@ -23,7 +23,7 @@ namespace METIER {
 		/// </summary>
 		/// <param name="ip"></param>
 		/// <param name="port"></param>
-		Station(std::string ip, int port, HELPER::LogDisplayer& logdisplayer);
+		Station(std::string ip, int port, HELPER::LogDisplayer& logdisplayer, sf::TcpSocket& connected);
 		/// <summary>
 		/// Destructeur de la classe Station
 		/// </summary>

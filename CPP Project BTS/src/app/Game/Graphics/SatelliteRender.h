@@ -37,7 +37,7 @@ namespace GRAPHICS {
 		/// </summary>
 		/// <param name="window"></param>
 		/// <param name="font"></param>
-		SatelliteRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term);
+		SatelliteRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected);
 		/// <summary>
 		/// Destructeur
 		/// </summary>

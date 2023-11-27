@@ -2,14 +2,14 @@
 
 
 namespace GRAPHICS {
-	StationRender::StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term) {
+	StationRender::StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected) {
 
 		// initialisation des objets
 		int port = 6000;
 
 		// initialisation de la communication
 		logDisplayer = new HELPER::LogDisplayer(CONSTANT::LOGLINESIZE + 27, CONSTANT::LOGLINECOUNT);
-		station = new METIER::Station(sf::IpAddress::getLocalAddress().toString(), port, *logDisplayer);
+		station = new METIER::Station(sf::IpAddress::getLocalAddress().toString(), port, *logDisplayer, connected);
 
 		// initialisation des formes
 

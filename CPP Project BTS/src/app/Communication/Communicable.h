@@ -6,8 +6,7 @@
 #include <SFML/Network.hpp>
 #include <string>
 #include <iostream>
-#include <thread>
-#include <mutex>
+#include <queue>
 #include "Client/Client.h"
 #include "Serveur/Serveur.h"
 #include "../Helper/LogDisplayer.h"
@@ -18,18 +17,22 @@ namespace METIER {
 		CORE::Client* client;
 		CORE::Serveur* serveur;
 
-		std::thread listeningThread;
+		std::queue<std::string> messages;
+		std::condition_variable cv;
+		sf::Thread listeningThread;
 		std::mutex mutex;
 		bool listening;
-		void handleConnection(sf::TcpSocket& connected);
+		void handleConnection();
+		sf::TcpSocket& connected;
 	public:
-		Communicable(const sf::IpAddress& ip, unsigned short listeningPort, unsigned short remotePort, HELPER::LogDisplayer& logdisplayer);
+		Communicable(const sf::IpAddress& ip, unsigned short listeningPort, unsigned short remotePort, HELPER::LogDisplayer& logdisplayer, sf::TcpSocket& connected);
 		~Communicable();
 
-		void startListeningThread(sf::TcpSocket& connected);
+		void startListeningThread();
 		void stopListeningThread();
 
 		void init(Communicable* comm, sf::TcpSocket& socket);
+		void processMessage();
 
 		bool startListening();
 		bool connect();

@@ -2,7 +2,7 @@
 
 namespace METIER {
 
-	Satellite::Satellite(std::string ip, int port, HELPER::LogDisplayer& logdisplayer) : Communicable::Communicable(ip, port, 6000, logdisplayer) {}
+	Satellite::Satellite(std::string ip, int port, HELPER::LogDisplayer& logdisplayer, sf::TcpSocket& connected) : Communicable::Communicable(ip, port, 6000, logdisplayer, connected) {}
 
 	Satellite::~Satellite() {}
 

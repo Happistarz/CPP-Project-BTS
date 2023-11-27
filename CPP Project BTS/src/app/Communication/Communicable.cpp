@@ -2,8 +2,8 @@
 
 namespace METIER {
 
-	Communicable::Communicable(const sf::IpAddress& ip, unsigned short listeningPort, unsigned short remotePort, HELPER::LogDisplayer& logdisplayer)
-		: listening(true)
+	Communicable::Communicable(const sf::IpAddress& ip, unsigned short listeningPort, unsigned short remotePort, HELPER::LogDisplayer& logdisplayer, sf::TcpSocket& connected)
+		: listening(true), listeningThread(&METIER::Communicable::handleConnection, this), mutex(), cv(), connected(connected)
 	{
 		serveur = new CORE::Serveur(listeningPort, logdisplayer);
 		client = new CORE::Client(ip, remotePort, logdisplayer);
@@ -17,30 +17,44 @@ namespace METIER {
 		stopListeningThread();
 	}
 
-	void Communicable::startListeningThread(sf::TcpSocket& connected) {
+	void Communicable::startListeningThread() {
 		std::cout << "start listening thread" << std::endl;
-		listeningThread = std::thread(&Communicable::handleConnection, this, std::ref(connected));
+		listeningThread.launch();
 	}
 
 	void Communicable::stopListeningThread() {
 		listening = false;
-		if (listeningThread.joinable())
-			listeningThread.join();
+		listeningThread.wait();
 	}
 
-	void Communicable::handleConnection(sf::TcpSocket& connected) {
+	void Communicable::handleConnection() {
 		while (listening) {
 			std::string message = receiveMessageServer(connected);
 			if (!message.empty()) {
-				std::cout << message << "aaa"<< std::endl;
-				if (message == "ping") {
-					sendMessage("pong");
-				}
-				else {
-					sendMessage("received message : " + message);
-				}
+				std::unique_lock<std::mutex> lock(mutex);
+				messages.push(message);
+				cv.notify_one();
+
+				processMessage();
 			}
-			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			std::this_thread::sleep_for(std::chrono::milliseconds(300));
+		}
+	}
+
+	void Communicable::processMessage() {
+		if (listening) {
+			std::unique_lock<std::mutex> lock(mutex);
+			if (!messages.empty()) {
+				std::string message = messages.front();
+				messages.pop();
+				lock.unlock();
+				std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+				std::cout << "message: " << message << std::endl;
+			}
+			else {
+				cv.wait(lock);
+			}
 		}
 	}
 
@@ -48,7 +62,7 @@ namespace METIER {
 		comm->connect();
 		if (accept(socket)) {
 			std::cout << "connected" << std::endl;
-			startListeningThread(socket);
+			startListeningThread();
 		}
 		else {
 			std::cout << "not connected" << std::endl;

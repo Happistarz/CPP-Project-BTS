@@ -39,13 +39,14 @@ namespace APP {
 		// initialisation des objets de la simulation
 		GRAPHICS::Simulator* simulator = new GRAPHICS::Simulator(window, rootPath, *jsonReader);
 
-		// init des objets de la station et du satellite
-		GRAPHICS::StationRender* stationRender = new GRAPHICS::StationRender(window, font, terminal);
-		GRAPHICS::SatelliteRender* satelliteRender = new GRAPHICS::SatelliteRender(window, font, terminal);
-
 		// connexion du satellite et de la station
 		sf::TcpSocket stationConnected;
 		sf::TcpSocket satelliteConnected;
+
+		// init des objets de la station et du satellite
+		GRAPHICS::StationRender* stationRender = new GRAPHICS::StationRender(window, font, terminal, stationConnected);
+		GRAPHICS::SatelliteRender* satelliteRender = new GRAPHICS::SatelliteRender(window, font, terminal, satelliteConnected);
+
 
 		// initialisation des sockets
 		stationRender->getCommunicable()->init(satelliteRender->getCommunicable(), stationConnected);
@@ -80,8 +81,6 @@ namespace APP {
 			// update de la station et du satellite
 			stationRender->update(deltaTime);
 			satelliteRender->update(deltaTime);
-
-			// update des sockets
 
 			// affichage de la fenetre
 			window.clear();

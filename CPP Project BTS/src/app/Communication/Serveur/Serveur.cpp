@@ -59,33 +59,22 @@ namespace CORE {
 		// faire un thread qui attend la réception
 		// avec un timeout pour éviter de bloquer le thread principal
 		// ------------------------
+		char buffer[2000];
+		std::size_t received;
 
+		connected.setBlocking(false);
+		sf::Socket::Status status = connected.receive(buffer, sizeof(buffer), received);
+		if (status != sf::Socket::Done) {
+			//std::cerr << "Error while receiving" << std::endl;
 
-		std::promise<std::string> promise;
-		std::future<std::string> future = promise.get_future();
-
-		std::thread([&]() {
-			char buffer[2000];
-			std::size_t received;
-
-			if (connected.receive(buffer, sizeof(buffer), received) == sf::Socket::Done) {
-				promise.set_value(std::string(buffer, received));
-			}
-			else {
-				promise.set_value("");
-			}
-			}).detach();
-
-			// Attendez le résultat avec un timeout
-			std::future_status status = future.wait_for(std::chrono::milliseconds(100));
-
-			if (status == std::future_status::ready) {
-				// La réception est terminée dans le délai
-				return future.get();
-			}
-			else {
-				// Timeout atteint
+			if (status == sf::Socket::NotReady) {
 				return "";
 			}
+			logdisplayer.addLine("SERVEUR | Erreur pendant la réception");
+			return "";
+		}
+		connected.setBlocking(true);
+		logdisplayer.addLine("SERVEUR | RECU: " + std::string(buffer, received));
+		return std::string(buffer, received);
 	}
 }

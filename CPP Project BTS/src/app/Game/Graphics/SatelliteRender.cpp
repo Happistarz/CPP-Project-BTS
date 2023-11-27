@@ -1,14 +1,14 @@
 #include "SatelliteRender.h"
 
 namespace GRAPHICS {
-	SatelliteRender::SatelliteRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term) {
+	SatelliteRender::SatelliteRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected) {
 
 		// initialisation des objets
 		int port = 5000;
 
 		// initialisation de la communication
 		logDisplayer = new HELPER::LogDisplayer(CONSTANT::LOGLINESIZE + 27, CONSTANT::LOGLINECOUNT);
-		satellite = new METIER::Satellite(sf::IpAddress::getLocalAddress().toString(), port, *logDisplayer);
+		satellite = new METIER::Satellite(sf::IpAddress::getLocalAddress().toString(), port, *logDisplayer, connected);
 
 		// initialisation des formes
 

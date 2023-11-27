@@ -2,7 +2,7 @@
 
 namespace METIER {
 
-	Station::Station(std::string ip, int port, HELPER::LogDisplayer& logdisplayer) : Communicable::Communicable(ip, port, 5000, logdisplayer) {}
+	Station::Station(std::string ip, int port, HELPER::LogDisplayer& logdisplayer, sf::TcpSocket& connected) : Communicable::Communicable(ip, port, 5000, logdisplayer, connected) {}
 
 	Station::~Station() {}
 
@@ -19,7 +19,7 @@ namespace METIER {
 	std::string Station::receiveSignal() {
 		// recoit le message
 		//return receiveMessage();
-		return "";
+		return "aaa";
 	}
 
 }

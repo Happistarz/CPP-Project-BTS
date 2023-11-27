@@ -37,7 +37,7 @@ namespace GRAPHICS {
 		/// </summary>
 		/// <param name="window"></param>
 		/// <param name="font"></param>
-		StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term);
+		StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected);
 		/// <summary>
 		/// Destructeur
 		/// </summary>
