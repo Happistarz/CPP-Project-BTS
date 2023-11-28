@@ -45,6 +45,7 @@ namespace GRAPHICS {
 		/// <param name="root"></param>
 		/// <param name="jsonReader"></param>
 		Simulator(sf::RenderWindow& window, std::string& root, READER::JsonReader& jsonReader);
+
 		/// <summary>
 		/// Destructeur du simulator
 		/// </summary>

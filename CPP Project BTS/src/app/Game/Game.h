@@ -24,6 +24,7 @@ namespace APP {
 		// root path
 		std::string rootPath;
 	public:
+
 		/// <summary>
 		/// Initialise le jeu et construit la fenetre
 		/// </summary>

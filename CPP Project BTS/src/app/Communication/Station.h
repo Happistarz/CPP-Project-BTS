@@ -24,11 +24,11 @@ namespace METIER {
 		/// <param name="ip"></param>
 		/// <param name="port"></param>
 		Station(std::string ip, int port, HELPER::LogDisplayer& logdisplayer, sf::TcpSocket& connected);
+
 		/// <summary>
 		/// Destructeur de la classe Station
 		/// </summary>
 		~Station();
-
 
 		//void startListeningThread() { Communicable::startListeningThread(); }
 		/// <summary>
@@ -36,11 +36,13 @@ namespace METIER {
 		/// </summary>
 		/// <param name="satellite"></param>
 		void pingSatellite(Communicable& satellite);
+
 		/// <summary>
 		/// Envoi un message au satellite
 		/// </summary>
 		/// <param name="message"></param>
 		void sendSignal(std::string message);
+
 		/// <summary>
 		/// Recoit un message du satellite
 		/// </summary>

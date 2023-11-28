@@ -24,6 +24,10 @@ namespace READER {
 		/// </summary>
 		/// <param name="path"></param>
 		JsonReader(std::string path);
+
+		/// <summary>
+		/// Detruit le JsonReader
+		/// </summary>
 		~JsonReader();
 
 		/// <summary>

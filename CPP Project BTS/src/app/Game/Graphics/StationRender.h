@@ -38,6 +38,7 @@ namespace GRAPHICS {
 		/// <param name="window"></param>
 		/// <param name="font"></param>
 		StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected);
+
 		/// <summary>
 		/// Destructeur
 		/// </summary>
@@ -50,6 +51,7 @@ namespace GRAPHICS {
 		/// </summary>
 		/// <param name="window"></param>
 		void draw(sf::RenderWindow& window);
+
 		/// <summary>
 		/// Update la station
 		/// </summary>
@@ -60,20 +62,24 @@ namespace GRAPHICS {
 		/// Ping un objet communicable
 		/// </summary>
 		void pingCommunicable();
+
 		/// <summary>
 		/// Envoie un message a un objet communicable
 		/// </summary>
 		/// <param name="msg"></param>
 		void sendCommunicable(std::string msg);
+
 		/// <summary>
 		/// Accepte une connexion sur la station
 		/// </summary>
 		/// <param name="socket"></param>
 		void accept(sf::TcpSocket& socket) { station->accept(socket); }
+
 		/// <summary>
 		/// Connecte la station a un objet communicable
 		/// </summary>
 		void connectCommunicable() { station->connect(); }
+
 		/// <summary>
 		/// Retourne l'objet communicable
 		/// </summary>

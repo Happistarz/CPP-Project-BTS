@@ -3,15 +3,19 @@
 namespace METIER {
 
 	Communicable::Communicable(const sf::IpAddress& ip, unsigned short listeningPort, unsigned short remotePort, HELPER::LogDisplayer& logdisplayer, sf::TcpSocket& connected)
-		: listening(true), listeningThread(&METIER::Communicable::handleConnection, this), mutex(), cv(), connected(connected)
+		// init tout les attributs de la classe
+		: listening(true), listeningThread(&METIER::Communicable::handleConnection, this), mutex(), connected(connected)
 	{
+		// communication
 		serveur = new CORE::Serveur(listeningPort, logdisplayer);
 		client = new CORE::Client(ip, remotePort, logdisplayer);
 
+		// start listening
 		startListening();
 	}
 
 	Communicable::~Communicable() {
+		// stop listening
 		disconnect();
 
 		stopListeningThread();
@@ -19,47 +23,33 @@ namespace METIER {
 
 	void Communicable::startListeningThread() {
 		std::cout << "start listening thread" << std::endl;
+		// lance le thread
 		listeningThread.launch();
 	}
 
 	void Communicable::stopListeningThread() {
 		listening = false;
+		// attend la fin du thread
 		listeningThread.wait();
 	}
 
 	void Communicable::handleConnection() {
+		// boucle infinie
 		while (listening) {
+			// recupere le message
 			std::string message = receiveMessageServer(connected);
 			if (!message.empty()) {
 				std::unique_lock<std::mutex> lock(mutex);
-				messages.push(message);
-				cv.notify_one();
-
-				processMessage();
 			}
-			std::this_thread::sleep_for(std::chrono::milliseconds(300));
-		}
-	}
-
-	void Communicable::processMessage() {
-		if (listening) {
-			std::unique_lock<std::mutex> lock(mutex);
-			if (!messages.empty()) {
-				std::string message = messages.front();
-				messages.pop();
-				lock.unlock();
-				std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
-				std::cout << "message: " << message << std::endl;
-			}
-			else {
-				cv.wait(lock);
-			}
+			// attend 300ms
+			std::this_thread::sleep_for(std::chrono::milliseconds(250));
 		}
 	}
 
 	void Communicable::init(Communicable* comm, sf::TcpSocket& socket) {
+		// initialise les objets de communication et les sockets
 		comm->connect();
+		// accepte une connexion
 		if (accept(socket)) {
 			std::cout << "connected" << std::endl;
 			startListeningThread();
@@ -82,22 +72,26 @@ namespace METIER {
 	}
 
 	void Communicable::disconnect() {
+		// deconnecte le socket
 		client->disconnect();
 		serveur->disconnect();
 	}
 
 	bool Communicable::sendMessage(std::string message) {
+		// lock le mutex pour eviter les problemes de concurrence et envoie le message
 		std::unique_lock<std::mutex> lock(mutex);
 		if (!client) return false;
 		return client->send(message);
 	}
 
 	std::string Communicable::receiveMessageServer(sf::TcpSocket& connected) {
+		// lock le mutex pour eviter les problemes de concurrence et recoit le message
 		std::unique_lock<std::mutex> lock(mutex);
 		return serveur->receive(connected);
 	}
 
 	std::string Communicable::receiveMessageClient() {
+		// lock le mutex pour eviter les problemes de concurrence et recoit le message
 		std::unique_lock<std::mutex> lock(mutex);
 		return client->receive();
 	}

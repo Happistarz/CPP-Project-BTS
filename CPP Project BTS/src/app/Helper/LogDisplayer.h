@@ -29,11 +29,13 @@ namespace HELPER {
 		/// Destructeur de la classe
 		/// </summary>
 		~LogDisplayer();
+
 		/// <summary>
 		/// Retourne une string avec toutes les lignes de log
 		/// </summary>
 		/// <returns></returns>
 		std::string buildString();
+
 		/// <summary>
 		/// Ajoute une ligne de log et gere les parametres
 		/// </summary>

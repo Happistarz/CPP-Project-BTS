@@ -22,24 +22,25 @@ namespace METIER {
 		/// <param name="port"></param>
 		/// <param name="logdisplayer"></param>
 		Satellite(std::string ip, int port, HELPER::LogDisplayer& logdisplayer, sf::TcpSocket& connected);
+
 		/// <summary>
 		/// Destructeur par defaut de satellite
 		/// </summary>
 		~Satellite();
-
-		//void startListeningThread() { Communicable::startListeningThread(); }
 
 		/// <summary>
 		/// Envoie un ping a une station
 		/// </summary>
 		/// <param name="station"></param>
 		void pingStation(Communicable& station);
+
 		/// <summary>
 		/// Envoie un message a une station
 		/// </summary>
 		/// <param name="station"></param>
 		/// <param name="message"></param>
 		void sendSignal(Communicable& station, std::string message);
+
 		/// <summary>
 		/// Recoit un message d'une station
 		/// </summary>

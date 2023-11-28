@@ -35,6 +35,7 @@ namespace UI {
 		/// <param name="window"></param>
 		/// <param name="callback"></param>
 		Button(sf::Vector2f pos, sf::Vector2f size, std::string msg, sf::Font& font, unsigned short char_size, sf::RenderWindow& window, Callback callback);
+
 		/// <summary>
 		/// Destructeur
 		/// </summary>
@@ -44,10 +45,12 @@ namespace UI {
 		/// Affiche le bouton
 		/// </summary>
 		void draw();
+
 		/// <summary>
 		/// Check si la souris est sur le bouton et si le bouton est cliqué
 		/// </summary>
 		void update();
+
 		/// <summary>
 		/// Renvoie true si le bouton est cliqué
 		/// </summary>

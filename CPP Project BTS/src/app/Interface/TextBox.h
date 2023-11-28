@@ -13,6 +13,7 @@ namespace UI {
 		sf::RectangleShape background;
 		sf::Text text;
 	public:
+
 		/// <summary>
 		/// Constructor qui initialise les elements graphiques
 		/// </summary>
@@ -23,6 +24,7 @@ namespace UI {
 		/// <param name="fontSize"></param>
 		/// <param name="window"></param>
 		TextBox(sf::Vector2f position, sf::Vector2f size, std::string text, sf::Font& font, unsigned int fontSize, sf::RenderWindow& window);
+
 		/// <summary>
 		/// Destructor
 		/// </summary>
@@ -33,36 +35,46 @@ namespace UI {
 		/// </summary>
 		/// <param name="window"></param>
 		void draw(sf::RenderWindow& window);
+
 		/// <summary>
 		/// Set la couleur du text
 		/// </summary>
 		/// <param name="color"></param>
 		void setTextColor(sf::Color color) { text.setFillColor(color); }
+
 		/// <summary>
 		/// Set la couleur du background
 		/// </summary>
 		/// <param name="color"></param>
 		void setShapeColor(sf::Color color) { background.setFillColor(color); }
+
 		/// <summary>
 		/// Set le text
 		/// </summary>
 		/// <param name="text"></param>
 		void setText(std::string text) { this->text.setString(text); }
+
 		/// <summary>
 		/// Ajoute une bordure de 2.f
 		/// </summary>
 		/// <param name="color"></param>
 		void setOutlineColor(sf::Color color) { background.setOutlineColor(color); background.setOutlineThickness(2.f); }
+
 		/// <summary>
 		/// Change la position du text dans le textbox
 		/// </summary>
 		/// <param name="offset"></param>
 		void changeLocalTextPosition(sf::Vector2f offset);
+
 		/// <summary>
 		/// Retourne le rectangle du background
 		/// </summary>
 		/// <returns></returns>
 		sf::RectangleShape getShape() { return background; }
+
+		/// <summary>
+		/// Centre le text dans le textbox
+		/// </summary>
 		void centerText();
 	};
 }

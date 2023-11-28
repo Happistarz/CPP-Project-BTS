@@ -166,7 +166,7 @@ namespace GRAPHICS {
 
 	void StationRender::pingCommunicable() {
 		// ping le communicable
-		if (station->sendMessage("ping")) {
+		if (station->sendMessage("Ping")) {
 			std::cout << "ping success" << std::endl;
 		}
 		else {
