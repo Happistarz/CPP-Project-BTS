@@ -44,8 +44,8 @@ namespace APP {
 		sf::TcpSocket satelliteConnected;
 
 		// init des objets de la station et du satellite
-		GRAPHICS::StationRender* stationRender = new GRAPHICS::StationRender(window, font, terminal, stationConnected);
-		GRAPHICS::SatelliteRender* satelliteRender = new GRAPHICS::SatelliteRender(window, font, terminal, satelliteConnected);
+		GRAPHICS::StationRender* stationRender = new GRAPHICS::StationRender(window, font, terminal, stationConnected, *simulator);
+		GRAPHICS::SatelliteRender* satelliteRender = new GRAPHICS::SatelliteRender(window, font, terminal, satelliteConnected, *simulator);
 
 
 		// initialisation des sockets

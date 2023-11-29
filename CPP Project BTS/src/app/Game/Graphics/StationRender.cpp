@@ -2,7 +2,7 @@
 
 
 namespace GRAPHICS {
-	StationRender::StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected) {
+	StationRender::StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected, GRAPHICS::Simulator& simulator) {
 
 		// initialisation des objets
 		int port = 6000;
@@ -51,7 +51,7 @@ namespace GRAPHICS {
 			font,
 			CONSTANT::charSize,
 			window,
-			[this]() {pingCommunicable(); }
+			[&]() {sendCommunicable("Ping",simulator); }
 		);
 
 		// send
@@ -66,7 +66,7 @@ namespace GRAPHICS {
 			font,
 			CONSTANT::charSize,
 			window,
-			[this]() {sendCommunicable("MESSAGE DE LA FRANCE OUI"); }
+			[&]() {sendCommunicable("MESSAGE DE LA FRANCE OUI", simulator); }
 		);
 
 		// initialisation des textes
@@ -164,19 +164,10 @@ namespace GRAPHICS {
 		window.draw(title);
 	}
 
-	void StationRender::pingCommunicable() {
-		// ping le communicable
-		if (station->sendMessage("Ping")) {
-			std::cout << "ping success" << std::endl;
-		}
-		else {
-			std::cout << "ping failed" << std::endl;
-		}
-	}
-
-	void StationRender::sendCommunicable(std::string msg) {
+	void StationRender::sendCommunicable(std::string msg, GRAPHICS::Simulator& simulator) {
 		// envoie un message au communicable
 		station->sendMessage(msg);
+		simulator.setDrawLineConnection(true,2);
 	}
 
 }

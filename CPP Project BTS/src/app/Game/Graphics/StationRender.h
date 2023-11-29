@@ -10,6 +10,7 @@
 #include "../../Communication/Station.h"
 #include "../../Interface/Button.h"
 #include "../../Interface/TextBox.h"
+#include "Simulator.h"
 
 namespace GRAPHICS {
 	/// <summary>
@@ -37,7 +38,7 @@ namespace GRAPHICS {
 		/// </summary>
 		/// <param name="window"></param>
 		/// <param name="font"></param>
-		StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected);
+		StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected, GRAPHICS::Simulator& simulator);
 
 		/// <summary>
 		/// Destructeur
@@ -59,15 +60,10 @@ namespace GRAPHICS {
 		void update(float deltaTime);
 
 		/// <summary>
-		/// Ping un objet communicable
-		/// </summary>
-		void pingCommunicable();
-
-		/// <summary>
 		/// Envoie un message a un objet communicable
 		/// </summary>
 		/// <param name="msg"></param>
-		void sendCommunicable(std::string msg);
+		void sendCommunicable(std::string msg, GRAPHICS::Simulator& simulator);
 
 		/// <summary>
 		/// Accepte une connexion sur la station

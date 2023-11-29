@@ -67,7 +67,7 @@ namespace GRAPHICS {
 		/// Set si on doit afficher la ligne de connexion
 		/// </summary>
 		/// <param name="drawLineConnection"></param>
-		void setDrawLineConnection(bool drawLineConnection) { this->drawLineConnection = drawLineConnection; }
+		void setDrawLineConnection(bool drawLineConnection, int time);
 	};
 }
 #endif

@@ -7,16 +7,17 @@ const float TOTALPIXEL = 512.f;
 const float TOTALPIXELRADIUS = 512.f;
 const float EARTHRADIUS = 6371.f;
 const float EARTHPIXELPNG = 512.f;
-const float SATELLITESPEED = 0.0134f;
-const float EARTHSPEED = 0.005f;
+const float SATELLITESPEED = 0.055f;
+const float EARTHSPEED = 0.008f;
 
 const float KMPERPIXEL = TOTALKM / TOTALPIXELRADIUS;
 const float EARTHPIXELRADIUS = EARTHRADIUS / KMPERPIXEL;
 const float EARTHPIXELRADIUSRATIO = EARTHPIXELRADIUS / (EARTHPIXELPNG / 2);
 
 float angleSAT = 90.f;
-float angleSTAorbit = 90.f;
-float angleSTA = 0.f;
+float angleSTA = 90.f;
+int displayLine = 0;
+int bufferLine = 0;
 
 namespace GRAPHICS {
 	Simulator::Simulator(sf::RenderWindow& window, std::string& root, READER::JsonReader& jsonReader) : drawLineConnection(false) {
@@ -119,13 +120,25 @@ namespace GRAPHICS {
 		window.draw(satellite);
 		window.draw(station);
 
-		// affiche la ligne de connexion si il y a un signal envoye
-		if (!drawLineConnection) return;
-		window.draw(lineConnection);
+		// affiche la ligne de connexion si il y a un signal envoye pendant 1s
+		if (drawLineConnection && displayLine < bufferLine * 60) {
+			window.draw(lineConnection);
+			displayLine++;
+		} 
+		else {
+			drawLineConnection = false;
+			displayLine = 0;
+			bufferLine = 0;
+		}
+	}
+
+	void Simulator::setDrawLineConnection(bool drawLineConnection, int time)
+	{
+		this->drawLineConnection = drawLineConnection;
+		bufferLine += time;
 	}
 
 	void Simulator::update(float deltaTime) {
-		
 		angleSAT += (SATELLITESPEED * deltaTime) / TOTALPIXEL;
 
 		float xa= TOTALPIXEL * cos(angleSAT);
@@ -139,20 +152,11 @@ namespace GRAPHICS {
 			) - sf::Vector2f(xa, ya) + satellite.getOrigin()
 		);
 
-		//lineConnection.setPosition(
-		//	HELPER::getShapePosition(
-		//		sky.getPosition(),
-		//		sky.getSize(),
-		//		lineConnection.getGlobalBounds().getSize()
-		//	) - sf::Vector2f(xa, ya)
-		//);
 
-		//lineConnection.setRotation(atan2(ya, xa) * 180 / M_PI);
+		angleSTA += (EARTHSPEED * deltaTime) / EARTHPIXELRADIUS;
 
-		angleSTAorbit += (EARTHSPEED * deltaTime) / EARTHPIXELRADIUS;
-
-		float xb = EARTHPIXELRADIUS * cos(angleSTAorbit);
-		float yb = EARTHPIXELRADIUS * sin(angleSTAorbit);
+		float xb = EARTHPIXELRADIUS * cos(angleSTA);
+		float yb = EARTHPIXELRADIUS * sin(angleSTA);
 
 		sf::Vector2f pos = HELPER::getShapePosition(
 			sky.getPosition(),
@@ -167,5 +171,19 @@ namespace GRAPHICS {
 		satellite.setRotation(angle + 90.f);
 
 		earth.rotate(EARTHSPEED * deltaTime);
+
+
+		lineConnection.setPosition(
+			HELPER::getShapePosition(
+				sky.getPosition(),
+				sky.getSize(),
+				station.getGlobalBounds().getSize()
+			) - sf::Vector2f(xb, yb) - direction / 2.f
+		);
+
+		direction = satellite.getPosition() - station.getPosition();
+		angle = atan2(direction.y, direction.x) * 180 / M_PI;
+
+		lineConnection.setRotation(angle + 90.f);
 	}
 }
