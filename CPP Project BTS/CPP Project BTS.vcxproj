@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\app\Game\Events.cpp" />
     <ClCompile Include="src\app\Helper\LogDisplayer.cpp" />
     <ClCompile Include="src\app\Interface\Button.cpp" />
     <ClCompile Include="src\app\Game\Graphics\SatelliteRender.cpp" />
@@ -159,8 +160,10 @@
     <ClCompile Include="src\app\Communication\Station.cpp" />
     <ClCompile Include="src\app\Game\Graphics\StationRender.cpp" />
     <ClCompile Include="src\app\Interface\TextBox.cpp" />
+    <ClCompile Include="src\app\Interface\TextInput.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\app\Game\Events.h" />
     <ClInclude Include="src\app\Game\Constants.h" />
     <ClInclude Include="src\app\Helper\LogDisplayer.h" />
     <ClInclude Include="src\app\Interface\Button.h" />
@@ -176,6 +179,7 @@
     <ClInclude Include="src\app\Communication\Station.h" />
     <ClInclude Include="src\app\Game\Graphics\StationRender.h" />
     <ClInclude Include="src\app\Interface\TextBox.h" />
+    <ClInclude Include="src\app\Interface\TextInput.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\data\json\setup.json" />

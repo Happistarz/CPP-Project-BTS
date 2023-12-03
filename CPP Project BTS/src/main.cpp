@@ -35,7 +35,8 @@ int main() {
 
 	// lance le jeu
 	APP::Game* game = new APP::Game(rootPath, jsonReader);
-	game->run();
+	//game->run();
+	game->runTest();
 
 	// delete les objets
 	delete game;

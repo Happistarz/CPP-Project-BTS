@@ -6,16 +6,13 @@
 #include "TextBox.h"
 #include <SFML/Graphics.hpp>
 #include <functional>
+#include "../Game/Constants.h"
 
 namespace UI {
 
 	class Button : public TextBox
 	{
 	private:
-		// isHovered = true si la souris est sur le bouton
-		bool isHovered;
-		// isClicked = true si le bouton est cliqué
-		bool isClicked;
 
 		// la fenetre sur laquelle le bouton est affiché
 		sf::RenderWindow& window;
@@ -46,16 +43,9 @@ namespace UI {
 		/// </summary>
 		void draw();
 
-		/// <summary>
-		/// Check si la souris est sur le bouton et si le bouton est cliqué
-		/// </summary>
-		void update();
-
-		/// <summary>
-		/// Renvoie true si le bouton est cliqué
-		/// </summary>
-		/// <returns></returns>
-		bool isHover() const { return isHovered; }
+		void OnClick() override;
+		void OnHover() override;
+		void OnUnHover() override;
 	};
 }
 

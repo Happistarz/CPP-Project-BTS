@@ -57,7 +57,7 @@ namespace GRAPHICS {
 		/// Update la station
 		/// </summary>
 		/// <param name="deltaTime"></param>
-		void update(float deltaTime);
+		void update(float deltaTime, sf::RenderWindow& window);
 
 		/// <summary>
 		/// Envoie un message a un objet communicable

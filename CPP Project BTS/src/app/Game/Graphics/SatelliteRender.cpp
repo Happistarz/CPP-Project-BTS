@@ -128,11 +128,11 @@ namespace GRAPHICS {
 		delete logDisplayer;
 	}
 
-	void SatelliteRender::update(float deltaTime) {
+	void SatelliteRender::update(float deltaTime, sf::RenderWindow& window) {
 
 		// update les objets
-		ping->update();
-		send->update();
+		ping->update(window);
+		send->update(window);
 
 
 		// update les textes
@@ -166,6 +166,6 @@ namespace GRAPHICS {
 	void SatelliteRender::sendCommunicable(std::string msg, GRAPHICS::Simulator& simulator) {
 		// envoie un message
 		satellite->sendMessage(msg);
-		simulator.setDrawLineConnection(true,2);
+		simulator.setDrawLineConnection(true, 2);
 	}
 }

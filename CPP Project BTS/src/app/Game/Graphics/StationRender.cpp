@@ -51,7 +51,7 @@ namespace GRAPHICS {
 			font,
 			CONSTANT::charSize,
 			window,
-			[&]() {sendCommunicable("Ping",simulator); }
+			[&]() {sendCommunicable("Ping", simulator); }
 		);
 
 		// send
@@ -130,10 +130,10 @@ namespace GRAPHICS {
 		delete logDisplayer;
 	}
 
-	void StationRender::update(float deltaTime) {
+	void StationRender::update(float deltaTime, sf::RenderWindow& window) {
 		// update les boutons
-		ping->update();
-		send->update();
+		ping->update(window);
+		send->update(window);
 
 
 		// update les textes
@@ -167,7 +167,7 @@ namespace GRAPHICS {
 	void StationRender::sendCommunicable(std::string msg, GRAPHICS::Simulator& simulator) {
 		// envoie un message au communicable
 		station->sendMessage(msg);
-		simulator.setDrawLineConnection(true,2);
+		simulator.setDrawLineConnection(true, 2);
 	}
 
 }

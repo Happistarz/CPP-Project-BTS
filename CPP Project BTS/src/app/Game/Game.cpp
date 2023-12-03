@@ -75,12 +75,12 @@ namespace APP {
 			processEvents();
 
 			// update de la fenetre
-			close->update();
+			close->update(window);
 			simulator->update(deltaTime);
 
 			// update de la station et du satellite
-			stationRender->update(deltaTime);
-			satelliteRender->update(deltaTime);
+			stationRender->update(deltaTime, window);
+			satelliteRender->update(deltaTime, window);
 
 			// affichage de la fenetre
 			window.clear();
@@ -110,6 +110,58 @@ namespace APP {
 				// close the window
 				window.close();
 			}
+		}
+	}
+
+	void Game::runTest() {
+		sf::Clock clock;
+		float deltaTime = 0.0f;
+
+		APP::Event events;
+
+		// initialisation des objets
+		sf::Font font;
+		font.loadFromFile(rootPath + "data/assets/arial.ttf");
+
+		UI::TextInput* textInput = new UI::TextInput(
+			sf::Vector2f(150.f, 150.f),
+			sf::Vector2f(200.f, 50.f),
+			font,
+			"test",
+			24U,
+			window
+		);
+
+		UI::Button* close = new UI::Button(
+			sf::Vector2f(0, 0),
+			sf::Vector2f(50.f, 50.f),
+			"X",
+			font,
+			24U,
+			window,
+			[this]() { window.close(); }
+		);
+
+		while (window.isOpen()) {
+			// calcul du delta time en ms pour les animations et les deplacements
+			sf::Time deltaTimeTimer = clock.restart();
+			deltaTime = deltaTimeTimer.asMicroseconds() / 1000.0;
+
+			// gestion des evenements
+			processEvents();
+
+			// update de la fenetre
+			textInput->update(window);
+			close->update(window);
+
+			// affichage de la fenetre
+			window.clear();
+
+			textInput->draw();
+			close->draw();
+
+			// affichage du buffer
+			window.display();
 		}
 	}
 }

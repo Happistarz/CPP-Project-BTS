@@ -8,10 +8,14 @@ namespace UI {
 	/// Textbox class for displaying text in a box
 	/// </summary>
 	class TextBox {
+	private:
 	protected:
 		// les elements graphiques
 		sf::RectangleShape background;
 		sf::Text text;
+
+		bool clicked;
+		bool hovered;
 	public:
 
 		/// <summary>
@@ -36,6 +40,7 @@ namespace UI {
 		/// <param name="window"></param>
 		void draw(sf::RenderWindow& window);
 
+		void update(sf::RenderWindow& window);
 		/// <summary>
 		/// Set la couleur du text
 		/// </summary>
@@ -66,6 +71,8 @@ namespace UI {
 		/// <param name="offset"></param>
 		void changeLocalTextPosition(sf::Vector2f offset);
 
+		void changeGlobalTextPosition(sf::Vector2f pos) { text.setPosition(pos); }
+
 		/// <summary>
 		/// Retourne le rectangle du background
 		/// </summary>
@@ -76,6 +83,10 @@ namespace UI {
 		/// Centre le text dans le textbox
 		/// </summary>
 		void centerText();
+
+		virtual void OnClick() {};
+		virtual void OnHover() {};
+		virtual void OnUnHover() {};
 	};
 }
 

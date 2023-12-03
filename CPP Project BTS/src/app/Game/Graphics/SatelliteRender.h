@@ -56,7 +56,7 @@ namespace GRAPHICS {
 		/// Update le satellite
 		/// </summary>
 		/// <param name="deltaTime"></param>
-		void update(float deltaTime);
+		void update(float deltaTime, sf::RenderWindow& window);
 
 		/// <summary>
 		/// Envoie un message a un objet communicable

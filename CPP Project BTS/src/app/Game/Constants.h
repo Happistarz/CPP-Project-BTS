@@ -20,6 +20,14 @@ namespace CONSTANT {
 
 	const sf::Color CONNECTED_COLOR = sf::Color(0, 255, 0);
 	const sf::Color DISCONNECTED_COLOR = sf::Color(255, 0, 0);
+
+	const sf::Color BUTTON_NORMAL_COLOR = sf::Color(77, 166, 255);
+	const sf::Color BUTTON_HOVER_COLOR = sf::Color(128, 191, 255);
+
+	const sf::Color TEXTINPUT_NORMAL_COLOR = sf::Color(255, 255, 255);
+	const sf::Color TEXTINPUT_HOVER_COLOR = sf::Color(100, 100, 100);
+
+	const int CURSOR_FRAME_COUNT = 30;
 }
 
 #endif // !CONSTANT_H

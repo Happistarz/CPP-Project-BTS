@@ -10,6 +10,8 @@
 #include "Graphics/StationRender.h"
 #include "Graphics/SatelliteRender.h"
 #include "../Interface/Button.h"
+#include "../Interface/TextInput.h"
+#include "Events.h"
 
 namespace APP {
 	/// <summary>
@@ -41,6 +43,11 @@ namespace APP {
 		/// Lance la boucle de jeu
 		/// </summary>
 		void run();
+
+		/// <summary>
+		/// Lance un test
+		/// </summary>
+		void runTest();
 
 		/// <summary>
 		/// Recupere les evenements de la fenetre et les traite
