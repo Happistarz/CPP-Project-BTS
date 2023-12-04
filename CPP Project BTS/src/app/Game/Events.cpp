@@ -5,7 +5,7 @@ namespace APP {
 	std::vector<Event::Function> Event::onHover;
 	std::vector<Event::Function> Event::onUnhover;
 	std::vector<Event::KeyFunction> Event::onKey;
-	std::vector<Event::Function> Event::onTextEntered;
+	std::vector<Event::TextFunction> Event::onTextEntered;
 
 	void Event::processEvents(sf::RenderWindow& window) {
 		Event& instance = getInstance();
@@ -30,7 +30,8 @@ namespace APP {
 				instance.callOnKey(event.key.code);
 				break;
 			case sf::Event::TextEntered:
-				instance.callOnTextEntered();
+				if (event.text.unicode < 128)
+					instance.callOnTextEntered(event.text.unicode);
 				break;
 			default:
 				break;
@@ -54,7 +55,7 @@ namespace APP {
 		getInstance().onKey.push_back(function);
 	}
 
-	void Event::addOnTextEntered(Function function) {
+	void Event::addOnTextEntered(TextFunction function) {
 		getInstance().onTextEntered.push_back(function);
 	}
 
@@ -82,9 +83,9 @@ namespace APP {
 		}
 	}
 
-	void Event::callOnTextEntered() {
+	void Event::callOnTextEntered(sf::Uint32 unicode) {
 		for (auto& function : getInstance().onTextEntered) {
-			function();
+			function(unicode);
 		}
 	}
 

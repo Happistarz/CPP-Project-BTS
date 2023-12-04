@@ -2,7 +2,7 @@
 
 
 namespace GRAPHICS {
-	StationRender::StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected, GRAPHICS::Simulator& simulator) {
+	StationRender::StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected, GRAPHICS::Simulator& simulator, UI::Modal& modal) {
 
 		// initialisation des objets
 		int port = 6000;
@@ -66,7 +66,12 @@ namespace GRAPHICS {
 			font,
 			CONSTANT::charSize,
 			window,
-			[&]() {sendCommunicable("MESSAGE DE LA FRANCE OUI", simulator); }
+			[&]() {
+				modal.openModal();
+				modal.setCallback([&](std::string msg) {
+					sendCommunicable(msg, simulator);
+				});
+			}
 		);
 
 		// initialisation des textes

@@ -14,9 +14,6 @@ namespace UI {
 	{
 	private:
 
-		// la fenetre sur laquelle le bouton est affiché
-		sf::RenderWindow& window;
-
 		// la fonction à appeler quand le bouton est cliqué
 		using Callback = std::function<void()>;
 		Callback onClickCallback;

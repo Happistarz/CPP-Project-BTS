@@ -16,6 +16,9 @@ namespace UI {
 
 		bool clicked;
 		bool hovered;
+		bool lastHovered;
+
+		sf::RenderWindow& window;
 	public:
 
 		/// <summary>
@@ -71,6 +74,10 @@ namespace UI {
 		/// <param name="offset"></param>
 		void changeLocalTextPosition(sf::Vector2f offset);
 
+		/// <summary>
+		/// Change la position du text dans la fenetre
+		/// </summary>
+		/// <param name="pos"></param>
 		void changeGlobalTextPosition(sf::Vector2f pos) { text.setPosition(pos); }
 
 		/// <summary>
@@ -84,8 +91,19 @@ namespace UI {
 		/// </summary>
 		void centerText();
 
+		/// <summary>
+		/// Fonction OnClick qui sera appelee quand le bouton sera clique
+		/// </summary>
 		virtual void OnClick() {};
+
+		/// <summary>
+		/// Fonction OnHover qui sera appelee quand la souris sera sur le bouton
+		/// </summary>
 		virtual void OnHover() {};
+
+		/// <summary>
+		/// Fonction OnUnHover qui sera appelee quand la souris ne sera plus sur le bouton
+		/// </summary>
 		virtual void OnUnHover() {};
 	};
 }

@@ -11,6 +11,7 @@
 #include "../../Interface/Button.h"
 #include "../../Interface/TextBox.h"
 #include "Simulator.h"
+#include "../../Interface/Modal.h"
 
 namespace GRAPHICS {
 	/// <summary>
@@ -38,7 +39,7 @@ namespace GRAPHICS {
 		/// </summary>
 		/// <param name="window"></param>
 		/// <param name="font"></param>
-		StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected, GRAPHICS::Simulator& simulator);
+		StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected, GRAPHICS::Simulator& simulator, UI::Modal& modal);
 
 		/// <summary>
 		/// Destructeur

@@ -2,7 +2,7 @@
 
 namespace UI {
 	TextBox::TextBox(sf::Vector2f position, sf::Vector2f size, std::string text, sf::Font& font, unsigned int fontSize, sf::RenderWindow& window)
-		: background(), text(), clicked(false), hovered(false)
+		: background(), text(), clicked(false), hovered(false), window(window), lastHovered(false)
 	{
 		// init le background
 		background.setPosition(position);
@@ -31,7 +31,6 @@ namespace UI {
 		if (hovered) {
 
 			hovered = true;
-			OnHover();
 
 			// verifie si le bouton est clique et si le callback n'a pas deja ete appele et hover est true
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !clicked) {
@@ -44,9 +43,20 @@ namespace UI {
 		}
 		else {
 			hovered = false;
-			OnUnHover();
 		}
 
+		// verifie si le bouton a ete hover ou unhover
+		if (hovered != lastHovered) {
+			if (hovered) {
+				OnHover();
+			}
+			else {
+				OnUnHover();
+			}
+		}
+
+		// met a jour la derniere position de la souris
+		lastHovered = hovered;
 	}
 
 	void TextBox::draw(sf::RenderWindow& window) {

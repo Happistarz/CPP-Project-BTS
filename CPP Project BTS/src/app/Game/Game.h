@@ -12,6 +12,7 @@
 #include "../Interface/Button.h"
 #include "../Interface/TextInput.h"
 #include "Events.h"
+#include "../Interface/Modal.h"
 
 namespace APP {
 	/// <summary>

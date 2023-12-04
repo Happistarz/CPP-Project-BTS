@@ -19,10 +19,13 @@ namespace UI {
 		void OnClick() override;
 		void OnHover() override;
 		void OnUnHover() override;
+		void OnTextEntered(sf::Uint32 unicode);
 		void OnKeyPressed(sf::Keyboard::Key key);
 
 		void SetText(std::string _text) { text.setString(_text); }
 		std::string GetText() { return text.getString(); }
+
+		void reset() { text.setString(""); cursor.setPosition(sf::Vector2f(text.getPosition().x + text.getGlobalBounds().width, text.getPosition().y)); textBuffer.clear(); }
 
 		bool GetFocused() { return focused; }
 

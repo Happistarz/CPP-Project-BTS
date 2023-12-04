@@ -1,7 +1,7 @@
 #include "SatelliteRender.h"
 
 namespace GRAPHICS {
-	SatelliteRender::SatelliteRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected, GRAPHICS::Simulator& simulator) {
+	SatelliteRender::SatelliteRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected, GRAPHICS::Simulator& simulator, UI::Modal& modal) {
 
 		// initialisation des objets
 		int port = 5000;
@@ -65,7 +65,12 @@ namespace GRAPHICS {
 			font,
 			CONSTANT::charSize,
 			window,
-			[&]() {sendCommunicable("MESSAGE DE LA FRANCE OUI", simulator); }
+			[&]() {
+				modal.openModal();
+				modal.setCallback([&](std::string msg) {
+					sendCommunicable(msg, simulator);
+				});
+			}
 		);
 
 		// initialisation des textes
