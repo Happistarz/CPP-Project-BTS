@@ -40,8 +40,19 @@ namespace UI {
 		/// </summary>
 		void draw();
 
+		/// <summary>
+		/// Evenement quand le bouton est cliqué
+		/// </summary>
 		void OnClick() override;
+
+		/// <summary>
+		/// Evenement quand le bouton est hover
+		/// </summary>
 		void OnHover() override;
+
+		/// <summary>
+		/// Evenement quand le bouton n'est plus hover
+		/// </summary>
 		void OnUnHover() override;
 	};
 }

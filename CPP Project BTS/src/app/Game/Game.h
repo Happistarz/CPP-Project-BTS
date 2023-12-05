@@ -5,14 +5,14 @@
 
 #include <SFML/Graphics.hpp>
 #include <thread>
-#include "Graphics/Simulator.h"
 #include "../Reader/JsonReader.h"
+#include "Graphics/Simulator.h"
 #include "Graphics/StationRender.h"
 #include "Graphics/SatelliteRender.h"
 #include "../Interface/Button.h"
 #include "../Interface/TextInput.h"
-#include "Events.h"
 #include "../Interface/Modal.h"
+#include "Events.h"
 
 namespace APP {
 	/// <summary>
@@ -49,12 +49,6 @@ namespace APP {
 		/// Lance un test
 		/// </summary>
 		void runTest();
-
-		/// <summary>
-		/// Recupere les evenements de la fenetre et les traite
-		/// </summary>
-		void processEvents();
-
 	};
 }
 

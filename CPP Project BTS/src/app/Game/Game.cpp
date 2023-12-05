@@ -131,17 +131,6 @@ namespace APP {
 		delete close;
 	}
 
-	void Game::processEvents() {
-		sf::Event event;
-		// gestion des evenements
-		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed) {
-				// close the window
-				window.close();
-			}
-		}
-	}
-
 	void Game::runTest() {
 		sf::Clock clock;
 		float deltaTime = 0.0f;
@@ -154,14 +143,14 @@ namespace APP {
 		sf::Font font;
 		font.loadFromFile(rootPath + "data/assets/arial.ttf");
 
-		/*UI::TextInput* textInput = new UI::TextInput(
+		UI::TextInput* textInput = new UI::TextInput(
 			sf::Vector2f(150.f, 150.f),
 			sf::Vector2f(200.f, 50.f),
 			font,
 			"test",
 			24U,
 			window
-		);*/
+		);
 
 		UI::Button* close = new UI::Button(
 			sf::Vector2f(0, 0),
@@ -173,7 +162,7 @@ namespace APP {
 			[this]() { window.close(); }
 		);
 
-		sf::Vector2f modalSize = sf::Vector2f(600.f, 200.f);
+		/*sf::Vector2f modalSize = sf::Vector2f(600.f, 200.f);
 
 		UI::Modal* modal = new UI::Modal(
 			HELPER::getShapePosition(
@@ -205,7 +194,7 @@ namespace APP {
 					modal->openModal();
 				}
 			}
-		);
+		);*/
 
 
 		while (window.isOpen()) {
@@ -215,11 +204,11 @@ namespace APP {
 
 
 			// update de la fenetre
-			//textInput->update(window);
+			textInput->update(window);
 			close->update(window);
 
-			modalButton->update(window);
-			modal->update();
+			//modalButton->update(window);
+			//modal->update();
 
 			// gestion des evenements
 			events.processEvents(window);
@@ -227,11 +216,11 @@ namespace APP {
 			// affichage de la fenetre
 			window.clear();
 
-			//textInput->draw();
+			textInput->draw();
 			close->draw();
 
-			modalButton->draw();
-			modal->draw();
+			//modalButton->draw();
+			//modal->draw();
 
 			// affichage du buffer
 			window.display();
