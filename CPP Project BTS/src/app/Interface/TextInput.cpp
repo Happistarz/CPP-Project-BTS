@@ -1,29 +1,28 @@
 #include "TextInput.h"
 
 int cursorcount = CONSTANT::CURSOR_FRAME_COUNT;
-int cursorindex = 0;
-const int maxTextSize = 13;
 
 namespace UI {
 	TextInput::TextInput(sf::Vector2f position, sf::Vector2f size, sf::Font& font, std::string _text, unsigned int characterSize, sf::RenderWindow& window)
-		: TextBox(position, size, "", font, characterSize, window), window(window), focused(false)
+		: TextBox(position, size, "", font, characterSize, window), window(window), focused(false), cursor(), placeholder(), textBuffer(), cursorindex(0), maxTextSize(size.x / characterSize)
 	{
-		background.setSize(sf::Vector2f(size.x, text.getGlobalBounds().height+40.f));
+		background.setSize(sf::Vector2f(size.x, text.getGlobalBounds().height + 40.f));
 
 		textBuffer.reserve(100);
 
 		cursor.setSize(sf::Vector2f(2.f, background.getGlobalBounds().height - 10.f));
 		cursor.setFillColor(sf::Color::White);
 
-		cursor.setPosition(
-			text.findCharacterPos(cursorindex) + sf::Vector2f(0.f, 2.f)
-		);
 
 		setOutlineColor(sf::Color::White);
 		setShapeColor(CONSTANT::BUTTON_NORMAL_COLOR);
 		setTextColor(sf::Color::White);
 
 		changeLocalTextPosition(sf::Vector2f(5.f, 4.f));
+
+		cursor.setPosition(
+			text.findCharacterPos(cursorindex) + sf::Vector2f(0.f, 2.f)
+		);
 
 		placeholder.setFont(font);
 		placeholder.setCharacterSize(characterSize);
@@ -34,6 +33,7 @@ namespace UI {
 		// ajout des events
 		APP::Event::addOnTextEntered(std::bind(&TextInput::OnTextEntered, this, std::placeholders::_1));
 		APP::Event::addOnKey(std::bind(&TextInput::OnKeyPressed, this, std::placeholders::_1));
+		APP::Event::addOnClick(std::bind(&TextInput::OnGlobalClick, this));
 	}
 
 	TextInput::~TextInput()
@@ -61,6 +61,15 @@ namespace UI {
 			else {
 				cursorcount = 0;
 			}
+		}
+	}
+
+	void TextInput::OnGlobalClick()
+	{
+		sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
+
+		if (!background.getGlobalBounds().contains(mousePos)) {
+			focused = false;
 		}
 	}
 
@@ -97,16 +106,22 @@ namespace UI {
 			}
 			// sinon on ajoute le caractere
 			else {
-				textBuffer.push_back(static_cast<char>(unicode));
+				textBuffer.insert(textBuffer.begin() + cursorindex, static_cast<char>(unicode));
 				cursorindex++;
 			}
 		}
 
-		if (textBuffer.size() > maxTextSize) {
-			setText(GetText(textBuffer.size() - maxTextSize));
-		} else {
-			setText(GetText(0));
+		int start = 0;
+		for (int i = textBuffer.size() - 1; i >= 0; i--) {
+			setText(std::string(textBuffer.begin() + i, textBuffer.end()));
+			if (text.getLocalBounds().width > background.getSize().x) {
+				start = i + 1;
+				break;
+			}
 		}
+
+		// Mettez à jour le texte affiché et la position du curseur
+		setText(GetText(start));
 
 
 		// on deplace le curseur

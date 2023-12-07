@@ -41,6 +41,11 @@ namespace UI {
 		void OnClick() override;
 
 		/// <summary>
+		/// Evenements on global click
+		/// </summary>
+		void OnGlobalClick();
+
+		/// <summary>
 		/// Evenements on hover
 		/// </summary>
 		void OnHover() override;
@@ -106,5 +111,11 @@ namespace UI {
 		
 		// window
 		sf::RenderWindow& window;
+
+		// index du curseur
+		int cursorindex;
+
+		// taille max du texte
+		int maxTextSize;
 	};
 }

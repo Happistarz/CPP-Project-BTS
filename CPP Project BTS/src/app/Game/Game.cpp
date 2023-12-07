@@ -147,7 +147,7 @@ namespace APP {
 			sf::Vector2f(150.f, 150.f),
 			sf::Vector2f(200.f, 50.f),
 			font,
-			"test",
+			"test...",
 			24U,
 			window
 		);
