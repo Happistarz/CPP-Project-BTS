@@ -4,7 +4,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "../../Helper/Functions.h"
-#include "../../Reader/JsonReader.h"
 
 namespace GRAPHICS {
 	/// <summary>
@@ -44,7 +43,7 @@ namespace GRAPHICS {
 		/// <param name="window"></param>
 		/// <param name="root"></param>
 		/// <param name="jsonReader"></param>
-		Simulator(sf::RenderWindow& window, std::string& root, READER::JsonReader& jsonReader);
+		Simulator(sf::RenderWindow& window, std::string rootPath);
 
 		/// <summary>
 		/// Destructeur du simulator

@@ -5,7 +5,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <thread>
-#include "../Reader/JsonReader.h"
 #include "Graphics/Simulator.h"
 #include "Graphics/StationRender.h"
 #include "Graphics/SatelliteRender.h"
@@ -20,10 +19,9 @@ namespace APP {
 	/// </summary>
 	class Game {
 	private:
-		// json reader
-		READER::JsonReader* jsonReader;
 		// window
 		sf::RenderWindow window;
+
 		// root path
 		std::string rootPath;
 	public:
@@ -33,7 +31,7 @@ namespace APP {
 		/// </summary>
 		/// <param name="rootPath"></param>
 		/// <param name="jsonReader"></param>
-		Game(std::string rootPath, READER::JsonReader* jsonReader);
+		Game(std::string rootPath);
 
 		/// <summary>
 		/// Detruit le jeu

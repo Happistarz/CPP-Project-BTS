@@ -9,7 +9,9 @@ namespace GRAPHICS {
 
 		// initialisation de la communication
 		logDisplayer = new HELPER::LogDisplayer(CONSTANT::LOGLINESIZE + 27, CONSTANT::LOGLINECOUNT);
-		station = new METIER::Station(sf::IpAddress::getLocalAddress().toString(), port, *logDisplayer, connected);
+
+		// 5000 est le port du satellite
+		station = new METIER::Communicable(sf::IpAddress::getLocalAddress().toString(), port, 5000, *logDisplayer, connected);
 
 		// initialisation des formes
 
@@ -39,7 +41,7 @@ namespace GRAPHICS {
 
 		// initialisation des boutons
 
-		// ping
+		// ping button
 		ping = new UI::Button(
 			HELPER::getXShapePosition(
 				background.getPosition(),
@@ -54,7 +56,7 @@ namespace GRAPHICS {
 			[&]() {sendCommunicable("Ping", simulator); }
 		);
 
-		// send
+		// send button
 		send = new UI::Button(
 			HELPER::getXShapePosition(
 				sf::Vector2f(background.getPosition().x + backgroundSize.x / 2.f, background.getPosition().y),
@@ -76,7 +78,7 @@ namespace GRAPHICS {
 
 		// initialisation des textes
 
-		// connect
+		// connect text
 		connect = new UI::TextBox(
 			HELPER::getXShapePosition(
 				background.getPosition(),
@@ -93,7 +95,7 @@ namespace GRAPHICS {
 		connect->setShapeColor(CONSTANT::DISCONNECTED_COLOR);
 
 
-		// log
+		// log text
 		log = new UI::TextBox(
 			HELPER::getShapePosition(
 				background.getPosition(),
@@ -111,7 +113,7 @@ namespace GRAPHICS {
 		log->setOutlineColor(sf::Color::White);
 		log->changeLocalTextPosition(sf::Vector2f(7.f, 7.f));
 
-		// title
+		// title text
 		title.setString("Station | S:" + std::to_string(port));
 		title.setFont(font);
 		title.setCharacterSize(CONSTANT::charSize);

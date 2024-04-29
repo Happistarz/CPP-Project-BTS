@@ -6,7 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include "../Constants.h"
 #include "../../Helper/Functions.h"
-#include "../../Communication/Satellite.h"
+#include "../../Communication/Communicable.h"
 #include "../../Interface/Button.h"
 #include "../../Interface/TextBox.h"
 #include "../../Helper/LogDisplayer.h"
@@ -32,7 +32,7 @@ namespace GRAPHICS {
 
 		// Le satellite
 		sf::Text title;
-		METIER::Satellite* satellite;
+		METIER::Communicable* satellite;
 	public:
 		/// <summary>
 		/// Constructeur

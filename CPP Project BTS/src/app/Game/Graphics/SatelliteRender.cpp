@@ -8,7 +8,9 @@ namespace GRAPHICS {
 
 		// initialisation de la communication
 		logDisplayer = new HELPER::LogDisplayer(CONSTANT::LOGLINESIZE + 27, CONSTANT::LOGLINECOUNT);
-		satellite = new METIER::Satellite(sf::IpAddress::getLocalAddress().toString(), port, *logDisplayer, connected);
+
+		// 6000 est le port de la station
+		satellite = new METIER::Communicable(sf::IpAddress::getLocalAddress().toString(), port, 6000, *logDisplayer, connected);
 
 		// initialisation des formes
 
@@ -154,7 +156,7 @@ namespace GRAPHICS {
 
 		connect->centerText();
 
-		// affiche le log
+		// affiche le log et recupere le log
 		log->setText(logDisplayer->buildString());
 	}
 
@@ -171,6 +173,8 @@ namespace GRAPHICS {
 	void SatelliteRender::sendCommunicable(std::string msg, GRAPHICS::Simulator& simulator) {
 		// envoie un message
 		satellite->sendMessage(msg);
+
+		// dessine la ligne de connexion, true pour dessiner, 2 pour 2s
 		simulator.setDrawLineConnection(true, 2);
 	}
 }

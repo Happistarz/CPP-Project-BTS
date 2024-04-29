@@ -10,6 +10,9 @@
 
 namespace UI {
 
+	/// <summary>
+	/// Classe Button qui hérite de TextBox
+	/// </summary>
 	class Button : public TextBox
 	{
 	private:

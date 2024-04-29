@@ -9,7 +9,7 @@
 
 namespace UI {
 	/// <summary>
-	/// Text input box pour l'entrée de texte
+	/// Text input box pour l'entrée de texte, hérite de TextBox
 	/// </summary>
 	class TextInput : public TextBox
 	{

@@ -7,7 +7,7 @@
 #include "../Constants.h"
 #include "../../Helper/Functions.h"
 #include "../../Helper/LogDisplayer.h"
-#include "../../Communication/Station.h"
+#include "../../Communication/Communicable.h"
 #include "../../Interface/Button.h"
 #include "../../Interface/TextBox.h"
 #include "Simulator.h"
@@ -32,7 +32,7 @@ namespace GRAPHICS {
 
 		// La station
 		sf::Text title;
-		METIER::Station* station;
+		METIER::Communicable* station;
 	public:
 		/// <summary>
 		/// Constructeur

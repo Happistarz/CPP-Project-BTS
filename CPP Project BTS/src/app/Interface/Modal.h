@@ -23,7 +23,6 @@ namespace UI {
 		
 		bool opened;
 
-
 		// Elements de la fenetre
 		UI::Button* closeButton;
 		UI::Button* submitButton;

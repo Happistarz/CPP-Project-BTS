@@ -5,7 +5,7 @@
 
 namespace UI {
 	/// <summary>
-	/// Textbox class for displaying text in a box
+	/// Textbox class pour creer des zones de textes
 	/// </summary>
 	class TextBox {
 	private:

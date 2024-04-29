@@ -20,7 +20,7 @@ int displayLine = 0;
 int bufferLine = 0;
 
 namespace GRAPHICS {
-	Simulator::Simulator(sf::RenderWindow& window, std::string& root, READER::JsonReader& jsonReader) : drawLineConnection(false) {
+	Simulator::Simulator(sf::RenderWindow& window, std::string rootPath) : drawLineConnection(false) {
 
 		// initialisation des objets
 		sf::Vector2f backgroundSize(window.getSize().x / 1.5, window.getSize().y);
@@ -43,7 +43,7 @@ namespace GRAPHICS {
 		);
 
 		// earth
-		earthTexture.loadFromFile(root + "data/assets/earth.png");
+		earthTexture.loadFromFile(rootPath + "earth.png");
 		earth.setTexture(earthTexture);
 		earth.setScale(EARTHPIXELRADIUSRATIO, EARTHPIXELRADIUSRATIO);
 		earth.setOrigin(earth.getLocalBounds().getSize() / 2.f);
@@ -70,7 +70,7 @@ namespace GRAPHICS {
 		);
 
 		// satellite
-		satelliteTexture.loadFromFile(root + "data/assets/satellite.png");
+		satelliteTexture.loadFromFile(rootPath + "satellite.png");
 		satellite.setTexture(satelliteTexture);
 		satellite.setScale(0.15f, 0.15f);
 		satellite.setOrigin(satellite.getGlobalBounds().getSize() / 2.f);
@@ -84,7 +84,7 @@ namespace GRAPHICS {
 		);
 
 		// station
-		stationTexture.loadFromFile(root + "data/assets/station.png");
+		stationTexture.loadFromFile(rootPath + "station.png");
 		station.setTexture(stationTexture);
 		station.setScale(0.15f, 0.15f);
 		station.setOrigin(station.getLocalBounds().getSize() * 0.5f);

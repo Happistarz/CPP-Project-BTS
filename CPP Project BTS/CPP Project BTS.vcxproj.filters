@@ -21,15 +21,6 @@
     <ClCompile Include="src\app\Game\Game.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\app\Reader\JsonReader.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\app\Communication\Station.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\app\Communication\Satellite.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="src\app\Communication\Communicable.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -72,15 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\app\Game\Game.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\app\Reader\JsonReader.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\app\Communication\Station.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\app\Communication\Satellite.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="src\app\Communication\Communicable.h">
@@ -127,7 +109,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\data\json\test.json" />
-    <None Include="src\data\json\setup.json" />
+    <CopyFileToFolders Include="src\data\assets\VT323.ttf" />
+    <CopyFileToFolders Include="src\data\assets\arial.ttf" />
+    <CopyFileToFolders Include="src\data\assets\earth.png">
+      <Filter>Fichiers de ressources</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="src\data\assets\satellite.png">
+      <Filter>Fichiers de ressources</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="src\data\assets\station.png">
+      <Filter>Fichiers de ressources</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

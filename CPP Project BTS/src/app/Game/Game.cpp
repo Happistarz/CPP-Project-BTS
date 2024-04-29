@@ -5,7 +5,7 @@ const sf::VideoMode WINDOW_MODE = sf::VideoMode::getDesktopMode();
 
 
 namespace APP {
-	Game::Game(std::string rootPath, READER::JsonReader* jsonReader) : rootPath(rootPath), jsonReader(jsonReader) {
+	Game::Game(std::string rootPath) : rootPath(rootPath+"\\data\\assets\\") {
 
 		// creation de la fenetre
 		window.create(
@@ -32,11 +32,11 @@ namespace APP {
 
 		APP::Event events;
 
-		// initialisation des objets
+		// initialisation des fonts
 		sf::Font font;
-		font.loadFromFile(rootPath + "data/assets/arial.ttf");
+		font.loadFromFile(rootPath + "arial.ttf");
 		sf::Font terminal;
-		terminal.loadFromFile(rootPath + "data/assets/VT323.ttf");
+		terminal.loadFromFile(rootPath + "VT323.ttf");
 
 		// initialisation de la modal
 		sf::Vector2f modalSize = sf::Vector2f(600.f, 200.f);
@@ -46,15 +46,15 @@ namespace APP {
 				static_cast<sf::Vector2f>(window.getSize() / 2u),
 				modalSize
 			),
-			modalSize,
-			"Modal",
+			modalSize, 
+			"Envoyer un message",
 			font,
 			window
 		);
 
 
 		// initialisation des objets de la simulation
-		GRAPHICS::Simulator* simulator = new GRAPHICS::Simulator(window, rootPath, *jsonReader);
+		GRAPHICS::Simulator* simulator = new GRAPHICS::Simulator(window, rootPath);
 
 		// connexion du satellite et de la station
 		sf::TcpSocket stationConnected;
@@ -70,7 +70,7 @@ namespace APP {
 		satelliteRender->getCommunicable()->init(stationRender->getCommunicable(), satelliteConnected);
 
 
-		// initialisation des objets de la fenetre
+		// initialisation du bouton de fermeture de la fenetre
 		UI::Button* close = new UI::Button(
 			sf::Vector2f(0, 0),
 			sf::Vector2f(50.f, 50.f),
@@ -141,7 +141,7 @@ namespace APP {
 
 		// initialisation des objets
 		sf::Font font;
-		font.loadFromFile(rootPath + "data/assets/arial.ttf");
+		font.loadFromFile(rootPath + "arial.ttf");
 
 		UI::TextInput* textInput = new UI::TextInput(
 			sf::Vector2f(150.f, 150.f),
@@ -162,39 +162,6 @@ namespace APP {
 			[this]() { window.close(); }
 		);
 
-		/*sf::Vector2f modalSize = sf::Vector2f(600.f, 200.f);
-
-		UI::Modal* modal = new UI::Modal(
-			HELPER::getShapePosition(
-				sf::Vector2f(),
-				static_cast<sf::Vector2f>(window.getSize() / 2u),
-				modalSize
-			),
-			modalSize,
-			"Modal",
-			font,
-			window
-		);
-
-		UI::Button* modalButton = new UI::Button(
-			sf::Vector2f(150.f, 150.f),
-			sf::Vector2f(200.f, 50.f),
-			"Open modal",
-			font,
-			24U,
-			window,
-			[&]() { 
-			
-				if (modalState) {
-					modalState = false;
-					modal->closeModal();
-				}
-				else {
-					modalState = true;
-					modal->openModal();
-				}
-			}
-		);*/
 
 
 		while (window.isOpen()) {
