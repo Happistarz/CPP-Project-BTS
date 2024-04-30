@@ -5,6 +5,7 @@
 #include <string>
 #include <deque>
 #include "Functions.h"
+#include <chrono>
 
 namespace HELPER {
 	/// <summary>
@@ -17,6 +18,10 @@ namespace HELPER {
 		// les parametres
 		unsigned int maxChar;
 		unsigned int maxLine;
+
+		// time
+		std::chrono::time_point<std::chrono::high_resolution_clock> start;
+		
 	public:
 		/// <summary>
 		/// Constructeur de la classe
@@ -35,6 +40,8 @@ namespace HELPER {
 		/// </summary>
 		/// <returns></returns>
 		std::string buildString();
+
+		std::string getFormattedTime();
 
 		/// <summary>
 		/// Ajoute une ligne de log et gere les parametres

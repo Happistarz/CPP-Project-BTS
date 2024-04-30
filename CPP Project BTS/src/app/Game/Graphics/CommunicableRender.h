@@ -1,27 +1,27 @@
 #pragma once
 
-#ifndef STATIONRENDER_H
-#define STATIONRENDER_H
+#ifndef COMMUNICABLERENDER_H
+#define COMMUNICABLERENDER_H
 
 #include <SFML/Graphics.hpp>
 #include "../Constants.h"
 #include "../../Helper/Functions.h"
-#include "../../Helper/LogDisplayer.h"
 #include "../../Communication/Communicable.h"
 #include "../../Interface/Button.h"
 #include "../../Interface/TextBox.h"
+#include "../../Helper/LogDisplayer.h"
 #include "Simulator.h"
 #include "../../Interface/Modal.h"
 
 namespace GRAPHICS {
 	/// <summary>
-	/// Affiche la station
+	/// Classe pour afficher un communicable
 	/// </summary>
-	class StationRender {
+	class CommunicableRender {
 	private:
 		// Les formes
 		sf::RectangleShape background;
-		sf::RectangleShape stationBox;
+		sf::RectangleShape box;
 		UI::Button* ping;
 		UI::Button* send;
 
@@ -30,35 +30,39 @@ namespace GRAPHICS {
 		UI::TextBox* log;
 		HELPER::LogDisplayer* logDisplayer;
 
-		// La station
+		// Le communicable
 		sf::Text title;
-		METIER::Communicable* station;
+		METIER::Communicable* communicable;
+		int port;
+		std::string titleString;
+
+		sf::RenderWindow& window;
 	public:
 		/// <summary>
 		/// Constructeur
 		/// </summary>
 		/// <param name="window"></param>
 		/// <param name="font"></param>
-		StationRender(sf::RenderWindow& window, sf::Font& font, sf::Font& term, sf::TcpSocket& connected, GRAPHICS::Simulator& simulator, UI::Modal& modal);
+		CommunicableRender(sf::RenderWindow& window, std::string title, int portIn, int portOut, sf::TcpSocket& connected);
 
 		/// <summary>
 		/// Destructeur
 		/// </summary>
-		~StationRender();
-
-		//void startListeningThread() { station->startListeningThread(); }
+		~CommunicableRender();
 
 		/// <summary>
-		/// Affiche la station
+		/// Affiche le communicable
 		/// </summary>
 		/// <param name="window"></param>
 		void draw(sf::RenderWindow& window);
 
 		/// <summary>
-		/// Update la station
+		/// Update le communicable
 		/// </summary>
 		/// <param name="deltaTime"></param>
 		void update(float deltaTime, sf::RenderWindow& window);
+
+		void initGUI(sf::Vector2f pos, sf::Font& font, sf::Font& term, sf::TcpSocket& connected, GRAPHICS::Simulator& simulator, UI::Modal& modal);
 
 		/// <summary>
 		/// Envoie un message a un objet communicable
@@ -67,23 +71,22 @@ namespace GRAPHICS {
 		void sendCommunicable(std::string msg, GRAPHICS::Simulator& simulator);
 
 		/// <summary>
-		/// Accepte une connexion sur la station
+		/// Accepte une connexion sur le communicable
 		/// </summary>
-		/// <param name="socket"></param>
-		void accept(sf::TcpSocket& socket) { station->accept(socket); }
+		/// <param name="connected"></param>
+		void accept(sf::TcpSocket& connected) { communicable->accept(connected); }
 
 		/// <summary>
-		/// Connecte la station a un objet communicable
+		/// Connecte le communicable a un autre objet communicable
 		/// </summary>
-		void connectCommunicable() { station->connect(); }
+		void connectCommunicable() { communicable->connect(); }
 
 		/// <summary>
-		/// Retourne l'objet communicable
+		/// Retourne le communicable
 		/// </summary>
 		/// <returns></returns>
-		METIER::Communicable* getCommunicable() { return station; }
+		METIER::Communicable* getCommunicable() { return communicable; }
 	};
 }
 
-#endif // !STATIONRENDER_H
-
+#endif // !SATELLITERENDER_H

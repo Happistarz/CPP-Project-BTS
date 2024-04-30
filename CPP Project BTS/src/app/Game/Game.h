@@ -6,8 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <thread>
 #include "Graphics/Simulator.h"
-#include "Graphics/StationRender.h"
-#include "Graphics/SatelliteRender.h"
+#include "Graphics/CommunicableRender.h"
 #include "../Interface/Button.h"
 #include "../Interface/TextInput.h"
 #include "../Interface/Modal.h"

@@ -2,7 +2,10 @@
 
 
 namespace HELPER {
-	LogDisplayer::LogDisplayer(unsigned int maxChar, unsigned int maxLine) : maxChar(maxChar), maxLine(maxLine) {
+	LogDisplayer::LogDisplayer(unsigned int maxChar, unsigned int maxLine) 
+		: maxChar(maxChar), maxLine(maxLine), start(std::chrono::high_resolution_clock::now())
+	{
+		log.clear();
 	}
 
 	LogDisplayer::~LogDisplayer() {
@@ -17,7 +20,42 @@ namespace HELPER {
 		return result;
 	}
 
+	std::string LogDisplayer::getFormattedTime() {
+		auto end = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double> elapsed = end - start;
+
+		// mm:ss:ms
+		int minutes = (int)elapsed.count() / 60;
+		int seconds = (int)elapsed.count() % 60;
+		int milliseconds = (int)(elapsed.count() * 1000) % 1000;
+
+		std::string result = "";
+		if (minutes < 10) {
+			result += "0";
+		}
+
+		result += std::to_string(minutes) + ":";
+		if (seconds < 10) {
+			result += "0";
+		}
+
+		result += std::to_string(seconds) + ":";
+		if (milliseconds < 10) {
+			result += "00";
+		}
+		else if (milliseconds < 100) {
+			result += "0";
+		}
+
+		result += std::to_string(milliseconds);
+
+		return result;
+	}
+
 	void LogDisplayer::addLine(std::string line) {
+
+		line = "["+getFormattedTime() + "] " + line;
+
 		unsigned int count = 1;
 
 		if (line.size() > maxChar) {
